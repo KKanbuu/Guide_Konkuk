@@ -5,6 +5,7 @@
 
 
 ######## ------------ Global Planning ------------- ##########
+
 Input 1 : Ego position of robot from GNSS               [Start Point]
 Input 2 : Goal Index from ondemand service (Customer)   [Goal Point]
 
@@ -17,6 +18,7 @@ Output : Global Path                                    [nav_msgs::Path]
 5. Publish Path to Local Planning
 
 ######## ------------ Local Planning ------------- ##########
+
 Input 1 : Ego position of robot from GNSS               [Start Point]
 Input 2 : Global Path from Global Planning              [Standard Path]
 Input 3 : 2D LiDAR data from Perception                 [Point Cloud Data]
@@ -30,6 +32,7 @@ Output : Best Local Path robot will be followed
 5. Selecting Best Path and publish
 
 ######## ------------- Control ----------------- ################
+
 Input 1 : Vehicle State from GNSS - position, velocity,yaw, yawrate?
 Input 2 : Best Path from Local Planning
 
