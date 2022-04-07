@@ -367,13 +367,19 @@ gtest_hide_internal_symbols:BOOL=OFF
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 
 //Value Computed by CMake
-guideRobot_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/guideRobot
+guideRobot_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/global_planning
 
 //Value Computed by CMake
-guideRobot_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/guideRobot
+guideRobot_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/global_planning
 
 //Path to a library.
 lib:FILEPATH=/opt/ros/melodic/lib/libtf2.so
+
+//Value Computed by CMake
+local_planning_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/local_planning
+
+//Value Computed by CMake
+local_planning_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/local_planning
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/melodic/share/message_filters/cmake
@@ -545,7 +551,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -1,2 +1,2 @@
-guideRobot
+global_planning:local_planning
 -DCATKIN_DEVEL_PREFIX=/home/jh/Documents/GitHub/Guide_Konkuk/devel -DCMAKE_INSTALL_PREFIX=/home/jh/Documents/GitHub/Guide_Konkuk/install -G Unix Makefiles

@@ -131,7 +131,8 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/jh/Documents/GitHub/Guide_Konkuk/build/gtest/cmake_install.cmake")
-  include("/home/jh/Documents/GitHub/Guide_Konkuk/build/guideRobot/cmake_install.cmake")
+  include("/home/jh/Documents/GitHub/Guide_Konkuk/build/global_planning/cmake_install.cmake")
+  include("/home/jh/Documents/GitHub/Guide_Konkuk/build/local_planning/cmake_install.cmake")
 
 endif()
 
