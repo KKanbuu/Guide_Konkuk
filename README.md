@@ -7,6 +7,7 @@
 ######## ------------ Global Planning ------------- ##########
 
 Input 1 : Ego position of robot from GNSS               [Start Point]
+
 Input 2 : Goal Index from ondemand service (Customer)   [Goal Point]
 
 Output : Global Path                                    [nav_msgs::Path]
