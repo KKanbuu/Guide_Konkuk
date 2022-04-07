@@ -20,7 +20,9 @@ Output : Global Path                                    [nav_msgs::Path]
 ######## ------------ Local Planning ------------- ##########
 
 Input 1 : Ego position of robot from GNSS               [Start Point]
+
 Input 2 : Global Path from Global Planning              [Standard Path]
+
 Input 3 : 2D LiDAR data from Perception                 [Point Cloud Data]
 
 Output : Best Local Path robot will be followed 
@@ -34,6 +36,7 @@ Output : Best Local Path robot will be followed
 ######## ------------- Control ----------------- ################
 
 Input 1 : Vehicle State from GNSS - position, velocity,yaw, yawrate?
+
 Input 2 : Best Path from Local Planning
 
 Output : Lateral, Longitudinal Control Value to Arduino
