@@ -95,7 +95,6 @@ class pointPub{
             else{
                 theta_final=atan2(d,c);
             }
-
             theta=abs((theta_init-theta_final));
 
             if(theta>PI){
@@ -135,7 +134,7 @@ class pointPub{
         }
 
         void matrix_final_angle(){
-            for(int i=0;i<k;i++){     // 최종 점을 제외한 경로의 점들의 위치를 지정
+            for(int i=0;i<k;i++){     // 경로의 점들의 위치를 지정
                 double x = (theta_init-(i*theta/(k-1)));
                 point_info[i][0]=cos(x);
                 point_info[i][1]=sin(x);
@@ -155,13 +154,11 @@ class pointPub{
             init.pose.position.x=msg->data;
             a = init.pose.position.x;
             point_info[0][0]=a;
-            //ROS_INFO_STREAM(point_info[0][0]);
         }
         void y_init_Callback(const std_msgs::Float64ConstPtr &msg){
             init.pose.position.y=msg->data;
             b = init.pose.position.y;
             point_info[0][1]=b;
-            //ROS_INFO_STREAM(point_info[0][1]);
         }
         void x_Callback(const std_msgs::Float64ConstPtr &msg){
             goal.pose.position.x=msg->data;
