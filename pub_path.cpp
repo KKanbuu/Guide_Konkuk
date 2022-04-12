@@ -47,8 +47,7 @@ class pointPub{
             path_.header.frame_id = "/map"; 
             init.header.frame_id="/map";    
             goal.header.frame_id="/map";  // rviz에서 frame을 map으로 정해줌
-            point_information();
-            cal_point();
+            
             
         }
     private:
@@ -66,47 +65,103 @@ class pointPub{
         
         double o[2]={0,0};  // 임의로 정한 원의 중심
         double r=6;   // 임의로 정한 원의 반지름
-        double theta=270;  // 임의로 정한 각
+        double theta_init;  // 임의로 정한 각
+        double theta_final;
+        double theta;
         double PI = 3.141592;
 
         double a,b;
         double c,d;
         double m;
-        int k=15;     // 초기 점과 최종 점을 포함하여 10개의 점을 찍어서 path를 생성할 것
+        int k=50;     // 초기 점과 최종 점을 포함하여 15개의 점을 찍어서 path를 생성할 것
 
-        double point_info[7][3];
+        double point_info[50][3];
         
     public:
         void point_information(){
-            
-            for(int i=0;i<k;i++){
-                point_info[i][0]=r*cos((theta-(i*180/(k-1)))/180*PI);  //(theta/180*PI)-(i/(k-1)*PI)
-                point_info[i][1]=r*sin((theta-(i*180/(k-1)))/180*PI);
-                //point_info[i][2]=atan2(-point_info[i][0],point_info[i][1]);
-                ROS_INFO_STREAM(theta-(i*180/(k-1)));
+            //ROS_INFO_STREAM(point_info[0][1]);
+            //ROS_INFO_STREAM(point_info[0][0]);
+
+            if(atan2(point_info[0][1],point_info[0][0])<0){
+                theta_init=2*PI+atan2(point_info[0][1],point_info[0][0]);
             }
-            for(int i=1;i<k-1;i++){
+            else{
+                theta_init=atan2(point_info[0][1],point_info[0][0]);
+            }
+
+            if(atan2(d,c)<0){
+                theta_final=2*PI+atan2(d,c);
+            }
+            else{
+                theta_final=atan2(d,c);
+            }
+
+            theta=abs((theta_init-theta_final));
+
+            if(theta>PI){
+                theta=2*PI-theta;
+                if(theta_init>theta_final){
+                    matrix_init_angle();
+                }
+                else{
+                    matrix_final_angle();
+                }
+            }
+            else{
+                if(theta_init>theta_final){
+                    matrix_final_angle();
+                }
+                else{
+                    matrix_init_angle();
+                }
+            }
+        }
+
+        void matrix_init_angle(){
+            for(int i=0;i<k;i++){     // 경로의 점들의 위치를 지정
+                double x = (theta_init+(i*theta/(k-1)));
+                point_info[i][0]=cos(x);
+                point_info[i][1]=sin(x);
+                ROS_INFO_STREAM(point_info[i][0] << "  "<<point_info[i][1]);  
+                //ROS_INFO_STREAM(theta-(i*180/(k-1)));
+            }
+            for(int i=0;i<k-1;i++){   // 최종 점을 제외한 경로의 점들의 yaw값을 저장
                 point_info[i][2]=atan((point_info[i][1]-point_info[i+1][1])/(point_info[i][0]-point_info[i+1][0]));
             }
             point_info[k-1][2]=atan2(-point_info[k-1][0],point_info[k-1][1]);
-            /*point_info[0][0]=0; point_info[0][1]=-6; point_info[0][2]=0;
-            point_info[1][0]=-3; point_info[1][1]=-3*sqrt(3); point_info[1][2]=-1/sqrt(3);
-            point_info[2][0]=-3*sqrt(3); point_info[2][1]=-3; point_info[2][2]=-sqrt(3);
-            point_info[3][0]=-6; point_info[3][1]=0; point_info[3][2]=PI;
-            point_info[4][0]=-3*sqrt(3); point_info[4][1]=3; point_info[4][2]=sqrt(3);
-            point_info[5][0]=-3; point_info[5][1]=3*sqrt(3); point_info[5][2]=1/sqrt(3);
-            point_info[6][0]=0; point_info[6][1]=6; point_info[6][2]=0;*/
+            // 나중에 최종 점의 yaw 값은 경계조건에 포함되어 있다.
+
+            cal_point();
         }
+
+        void matrix_final_angle(){
+            for(int i=0;i<k;i++){     // 최종 점을 제외한 경로의 점들의 위치를 지정
+                double x = (theta_init-(i*theta/(k-1)));
+                point_info[i][0]=cos(x);
+                point_info[i][1]=sin(x);
+                ROS_INFO_STREAM(point_info[i][0] << "  "<<point_info[i][1]);  
+                //ROS_INFO_STREAM(theta-(i*180/(k-1)));
+            }
+            for(int i=0;i<k-1;i++){   // 최종 점을 제외한 경로의 점들의 yaw값을 저장
+                point_info[i][2]=atan((point_info[i][1]-point_info[i+1][1])/(point_info[i][0]-point_info[i+1][0]));
+            }
+            point_info[k-1][2]=atan2(-point_info[k-1][0],point_info[k-1][1]);
+            // 나중에 최종 점의 yaw 값은 경계조건에 포함되어 있다.
+
+            cal_point();
+        }
+
         void x_init_Callback(const std_msgs::Float64ConstPtr &msg){
             init.pose.position.x=msg->data;
             a = init.pose.position.x;
             point_info[0][0]=a;
+            //ROS_INFO_STREAM(point_info[0][0]);
         }
         void y_init_Callback(const std_msgs::Float64ConstPtr &msg){
             init.pose.position.y=msg->data;
             b = init.pose.position.y;
             point_info[0][1]=b;
-            //theta=atan2(a,b);
+            //ROS_INFO_STREAM(point_info[0][1]);
         }
         void x_Callback(const std_msgs::Float64ConstPtr &msg){
             goal.pose.position.x=msg->data;
@@ -117,33 +172,16 @@ class pointPub{
             goal.pose.position.y=msg->data;
             d=goal.pose.position.y;
             point_info[k-1][1]=d;
-            // m=(d-b)/(c-a);
-            // cal_point();
+            point_information();
         }
 
         void cal_point(){
             geometry_msgs::PoseStamped local_point;
-            /*
-            for(int j=0;j<7;j++){
-                local_point.pose.position.x=point_info[j][0];
-                local_point.pose.position.y=point_info[j][1];
-                local_point.pose.position.z=0.0;
-                m=point_info[j][2];
-                slope = tf::createQuaternionFromRPY(0,0,m);   // (roll, pitch, yaw)를 createQuaternionFromRPY를 통해 쿼터니안으로 변환.
-                local_point.pose.orientation.x = slope[0];
-                local_point.pose.orientation.y = slope[1];
-                local_point.pose.orientation.z = slope[2];
-                local_point.pose.orientation.w = slope[3];
-                path_.poses.push_back(local_point);
-            }*/
-            
-            // m=(d-b)/(c-a);  // yaw 값. 직선이기 때문에 일차함수의 기울기로 표현
 
             for(int j=0;j<k;j++){   // 초기 점과 최종 점을 포함하여 k개의 점을 찍어서 path를 생성할 것
                 local_point.pose.position.x=point_info[j][0];  // theta*(i/k)
                 local_point.pose.position.y=point_info[j][1];
                 local_point.pose.position.z=0.0;
-                //m = (sin(theta/180*PI*(i+1/k))-sin(theta/180*PI*(i/k))) / (cos(theta/180*PI*(i+1/k))-cos(theta/180*PI*(i/k)));
     
                 m = point_info[j][2];
                 slope = tf::createQuaternionFromRPY(0,0,m);   // (roll, pitch, yaw)를 createQuaternionFromRPY를 통해 쿼터니안으로 변환.
@@ -157,12 +195,7 @@ class pointPub{
                 path_.poses.push_back(local_point);
             }       
 
-            //pub_pose.publish(init);
-            //pub_pose.publish(goal);
-            pub_pose.publish(path_);
-            
-            //ROS_INFO_STREAM("goal point: "<<goal.pose.position.x<<" "<<goal.pose.position.y);
-            //ROS_INFO_STREAM("slope: " << m);
+                    
 
         }
         void pubpoint(){
@@ -175,13 +208,14 @@ int main(int argc, char **argv){
 
     ros::init(argc,argv,"pub_path");    
     pointPub pub;
+
     ros::Rate rate(0.5);
+
     while(ros::ok()){
         pub.pubpoint();
         ros::spinOnce();
         rate.sleep();
     }
-    // pub.cal_point();
     
 
     return 0;
