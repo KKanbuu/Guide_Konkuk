@@ -40,14 +40,14 @@ class indexPub{
 
     public:
         void pubInit(){
-            x_init.data = 0;   // x좌표 초기 값 
-            y_init.data = -6;   // y좌표 초기 값
+            x_init.data = 1;   // x좌표 초기 값 
+            y_init.data = -sqrt(3);   // y좌표 초기 값
             pub_init_x.publish(x_init);
             pub_init_y.publish(y_init);
         }
         void pubIdx(){
-            x_slot.data = 0;   // x좌표 최종 값
-	        y_slot.data = 6;   // y좌표 최종 값
+            x_slot.data = 1;   // x좌표 최종 값
+	        y_slot.data = sqrt(3);   // y좌표 최종 값
             pub_goal_x.publish(x_slot); 
 	        pub_goal_y.publish(y_slot); 
         }
@@ -58,11 +58,6 @@ int main(int argc, char **argv){
     indexPub pubI;
 
     ros::Rate rate(0.5);
-    /*
-    if(ros::ok()){
-        pubI.pubIdx();
-        ros::spinOnce();
-    }*/
     
     while(ros::ok()){
         pubI.pubInit();
