@@ -1,2 +1,2 @@
-global_planning:local_planning
--DCATKIN_DEVEL_PREFIX=/home/jh/Documents/GitHub/Guide_Konkuk/devel -DCMAKE_INSTALL_PREFIX=/home/jh/Documents/GitHub/Guide_Konkuk/install -G Unix Makefiles
+kkanbu_communication/communication_arduino:kkanbu_msgs:kkanbu_planning/global_planning:kkanbu_planning/kkanbu_control:kkanbu_planning/local_planning:kkanbu_tf:kkanbu_visualization
+-DCMAKE_BUILD_TYPE=Release -DCATKIN_DEVEL_PREFIX=/home/jh/Documents/GitHub/Guide_Konkuk/devel -DCMAKE_INSTALL_PREFIX=/home/jh/Documents/GitHub/Guide_Konkuk/install -G Unix Makefiles

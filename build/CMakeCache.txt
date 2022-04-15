@@ -23,6 +23,24 @@ BUILD_GTEST:BOOL=OFF
 //Build shared libraries (DLLs).
 BUILD_SHARED_LIBS:BOOL=ON
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=/usr/include
+
+//Boost library directory DEBUG
+Boost_LIBRARY_DIR_DEBUG:PATH=/usr/lib/x86_64-linux-gnu
+
+//Boost library directory RELEASE
+Boost_LIBRARY_DIR_RELEASE:PATH=/usr/lib/x86_64-linux-gnu
+
+//Boost system library (debug)
+Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
+
+//Boost system library (release)
+Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
+
 //List of ';' separated packages to exclude
 CATKIN_BLACKLIST_PACKAGES:STRING=
 
@@ -47,7 +65,7 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //Choose the type of build, options are: None(CMAKE_CXX_FLAGS or
 // CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.
-CMAKE_BUILD_TYPE:STRING=
+CMAKE_BUILD_TYPE:STRING=Release
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -293,6 +311,18 @@ actionlib_msgs_DIR:PATH=/opt/ros/melodic/share/actionlib_msgs/cmake
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/melodic/share/catkin/cmake
 
+//Value Computed by CMake
+communication_arduino_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_communication/communication_arduino
+
+//Value Computed by CMake
+communication_arduino_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_communication/communication_arduino
+
+//Value Computed by CMake
+control_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/control
+
+//Value Computed by CMake
+control_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/control
+
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/melodic/share/cpp_common/cmake
 
@@ -316,6 +346,12 @@ genpy_DIR:PATH=/opt/ros/melodic/share/genpy/cmake
 
 //The directory containing a CMake configuration file for geometry_msgs.
 geometry_msgs_DIR:PATH=/opt/ros/melodic/share/geometry_msgs/cmake
+
+//Value Computed by CMake
+global_planning_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/global_planning
+
+//Value Computed by CMake
+global_planning_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/global_planning
 
 //Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/gtest/googlemock
@@ -367,19 +403,40 @@ gtest_hide_internal_symbols:BOOL=OFF
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 
 //Value Computed by CMake
-guideRobot_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/global_planning
+kkanbu_control_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/kkanbu_control
 
 //Value Computed by CMake
-guideRobot_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/global_planning
+kkanbu_control_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/kkanbu_control
+
+//Value Computed by CMake
+kkanbu_msgs_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_msgs
+
+//The directory containing a CMake configuration file for kkanbu_msgs.
+kkanbu_msgs_DIR:PATH=/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/kkanbu_msgs/cmake
+
+//Value Computed by CMake
+kkanbu_msgs_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs
+
+//Value Computed by CMake
+kkanbu_tf_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_tf
+
+//Value Computed by CMake
+kkanbu_tf_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_tf
+
+//Value Computed by CMake
+kkanbu_visualization_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_visualization
+
+//Value Computed by CMake
+kkanbu_visualization_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_visualization
 
 //Path to a library.
 lib:FILEPATH=/opt/ros/melodic/lib/libtf2.so
 
 //Value Computed by CMake
-local_planning_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/local_planning
+local_planning_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/local_planning
 
 //Value Computed by CMake
-local_planning_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/local_planning
+local_planning_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/melodic/share/message_filters/cmake
@@ -438,6 +495,9 @@ tf2_ros_DIR:PATH=/opt/ros/melodic/share/tf2_ros/cmake
 //The directory containing a CMake configuration file for tf.
 tf_DIR:PATH=/opt/ros/melodic/share/tf/cmake
 
+//The directory containing a CMake configuration file for visualization_msgs.
+visualization_msgs_DIR:PATH=/opt/ros/melodic/share/visualization_msgs/cmake
+
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/melodic/share/xmlrpcpp/cmake
 
@@ -446,6 +506,18 @@ xmlrpcpp_DIR:PATH=/opt/ros/melodic/share/xmlrpcpp/cmake
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_DIR
+Boost_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_INCLUDE_DIR
+Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_LIBRARY_DIR_DEBUG
+Boost_LIBRARY_DIR_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_LIBRARY_DIR_RELEASE
+Boost_LIBRARY_DIR_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
+Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
+Boost_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //catkin environment
 CATKIN_ENV:INTERNAL=/home/jh/Documents/GitHub/Guide_Konkuk/build/catkin_generated/env_cached.sh
 CATKIN_TEST_RESULTS_DIR:INTERNAL=/home/jh/Documents/GitHub/Guide_Konkuk/build/test_results
@@ -551,7 +623,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -622,4 +694,16 @@ PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //  And it needs to match.  But setuptools won't tell us where
 // it will install things.
 PYTHON_INSTALL_DIR:INTERNAL=lib/python2.7/dist-packages
+//Components requested for this build tree.
+_Boost_COMPONENTS_SEARCHED:INTERNAL=system
+//Last used Boost_INCLUDE_DIR value.
+_Boost_INCLUDE_DIR_LAST:INTERNAL=/usr/include
+//Last used Boost_LIBRARY_DIR_DEBUG value.
+_Boost_LIBRARY_DIR_DEBUG_LAST:INTERNAL=/usr/lib/x86_64-linux-gnu
+//Last used Boost_LIBRARY_DIR_RELEASE value.
+_Boost_LIBRARY_DIR_RELEASE_LAST:INTERNAL=/usr/lib/x86_64-linux-gnu
+//Last used Boost_NAMESPACE value.
+_Boost_NAMESPACE_LAST:INTERNAL=boost
+//Last used Boost_USE_MULTITHREADED value.
+_Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
 

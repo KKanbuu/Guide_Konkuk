@@ -1,0 +1,8 @@
+prefix=/home/jh/Documents/GitHub/Guide_Konkuk/devel
+
+Name: communication_arduino
+Description: Description of communication_arduino
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

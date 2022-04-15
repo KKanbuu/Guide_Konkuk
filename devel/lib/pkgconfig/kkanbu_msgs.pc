@@ -1,0 +1,8 @@
+prefix=/home/jh/Documents/GitHub/Guide_Konkuk/devel
+
+Name: kkanbu_msgs
+Description: Description of kkanbu_msgs
+Version: 0.0.0
+Cflags: -I/home/jh/Documents/GitHub/Guide_Konkuk/devel/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime std_msgs geometry_msgs

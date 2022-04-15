@@ -1,0 +1,8 @@
+prefix=/home/jh/Documents/GitHub/Guide_Konkuk/install
+
+Name: kkanbu_tf
+Description: Description of kkanbu_tf
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

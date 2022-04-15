@@ -1,9 +1,0 @@
-<?xml version="1.0"?> 
-<launch>
-	<arg name="map" default="$/home/jh/Documents/GitHub/Guide_Konkuk/src/global_planning/map/waypoint.csv"/>
-
-	<param name="map" value="$(arg map)"/>
-	
-	<node pkg='global_planning/src' type='Get_GPS.py' name='hmi' output='screen' respawn='true'/>
-	<node pkg="rviz" type="rviz" name="rviz" args="-d $/home/jh/Documents/GitHub/Guide_Konkuk/src/global_planning/map/map.rviz" />
-</launch>

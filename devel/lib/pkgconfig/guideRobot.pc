@@ -1,8 +1,0 @@
-prefix=/home/jh/Documents/GitHub/Guide_Konkuk/devel
-
-Name: guideRobot
-Description: Description of guideRobot
-Version: 0.0.0
-Cflags: -I/home/jh/Documents/GitHub/Guide_Konkuk/src/global_planning/src
-Libs: -L${prefix}/lib 
-Requires: roscpp rospy tf tf2 nav_msgs geometry_msgs std_msgs
