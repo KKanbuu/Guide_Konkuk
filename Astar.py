@@ -15,7 +15,7 @@ class Node():
 		return self.position == other.position
 
 
-def astar(map, start, end):
+def astar(GPS_to_LandmarkPoints, start, end):
 	start_node = Node(None, start)
 	start_node.g = start_node.h = start_node.f = 0
 	end_node = Node(None, end)
@@ -36,7 +36,7 @@ def astar(map, start, end):
 				current_index = index
 				
 		open_list.pop(current_index) 
-		closed_list.pop(current_node)
+		closed_list.append(current_node)
 
 		if current_node == end_node: # 도착노드까지 탐색 완료
 			path = []
@@ -50,10 +50,10 @@ def astar(map, start, end):
 		for new_position in [(0,-1), (0,1), (-1,0), (1,0),]:
 			node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
 
-			if node_position[0] > (len(map) - 1) or node_position[0] < 0 or node_position[1] > (len(map[len(map) - 1]) - 1) or node_position[1] < 0:
+			if node_position[0] > (len(GPS_to_LandmarkPoints) - 1) or node_position[0] < 0 or node_position[1] > (len(GPS_to_LandmarkPoints[len(GPS_to_LandmarkPoints) - 1]) - 1) or node_position[1] < 0:
 				continue
 
-			if map[node_position[0]][node_position[1]] == 1: #이동될 지점이벽
+			if GPS_to_LandmarkPoints[node_position[0]][node_position[1]] == 1: #이동될 지점이벽
 				continue 
 			elif node_position[1] == start[1] - 1 and current_node.position == start_node.position:
 				continue
@@ -70,11 +70,12 @@ def astar(map, start, end):
 			if check == False:
 				child.g = current_node.g + 1 
 				child.h = ((child.position[0]- end_node.position[1]) ** 2) + ((child.position[1] - end_node.position[0]) ** 2)
+				#피타고라스 정리로 수평 수직 거리 가중치(휴리스틱)
 				child.f = child.g + child.h
 
 				open_list.append(child)
 
-	def main(map, start, end):
-		path = astar(map, start, end)
+	def main(GPS_to_LandmarkPoints, start, end):
+		path = astar(GPS_to_LandmarkPoints, start, end)
 		return path
 
