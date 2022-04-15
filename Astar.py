@@ -53,11 +53,12 @@ def astar(GPS_to_LandmarkPoints, start, end):
 			if node_position[0] > (len(GPS_to_LandmarkPoints) - 1) or node_position[0] < 0 or node_position[1] > (len(GPS_to_LandmarkPoints[len(GPS_to_LandmarkPoints) - 1]) - 1) or node_position[1] < 0:
 				continue
 
-			if GPS_to_LandmarkPoints[node_position[0]][node_position[1]] == 1: #이동될 지점이벽
+			"""		
+			if GPS_to_LandmarkPoints[node_position[0]][node_position[1]] == 1: 
 				continue 
 			elif node_position[1] == start[1] - 1 and current_node.position == start_node.position:
 				continue
-
+			"""
 			new_node = Node(current_node, node_position)
 			children.append(new_node)
 
