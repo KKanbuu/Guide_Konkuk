@@ -3,8 +3,7 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded:
-        - /Global Options1
+      Expanded: ~
       Splitter Ratio: 0.5138282179832458
     Tree Height: 601
   - Class: rviz/Selection
@@ -53,7 +52,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /vehicleDae
+      Marker Topic: /visualization/ego_model
       Name: ROBOT
       Namespaces:
         --KKANBU--: true
@@ -139,6 +138,71 @@ Visualization Manager:
       Topic: /ego/odometry
       Unreliable: false
       Value: true
+    - Class: jsk_rviz_plugin/PieChart
+      Enabled: true
+      Name: Velocity
+      Topic: /visulaization/ego_speed
+      Value: true
+      auto color change: false
+      background color: 0; 0; 0
+      backround alpha: 0
+      clockwise rotate direction: false
+      foreground alpha: 0.699999988079071
+      foreground alpha 2: 0.4000000059604645
+      foreground color: 245; 121; 0
+      left: 124
+      max color: 255; 0; 0
+      max color change threthold: 0
+      max value: 5
+      med color: 255; 0; 0
+      med color change threthold: 0
+      min value: 0
+      show caption: true
+      size: 128
+      text size: 14
+      top: 30
+    - Class: jsk_rviz_plugin/PieChart
+      Enabled: true
+      Name: Steering
+      Topic: /visulaization/cmd_steer
+      Value: true
+      auto color change: false
+      background color: 0; 0; 0
+      backround alpha: 0
+      clockwise rotate direction: false
+      foreground alpha: 0.699999988079071
+      foreground alpha 2: 0.4000000059604645
+      foreground color: 252; 233; 79
+      left: 260
+      max color: 255; 0; 0
+      max color change threthold: 0
+      max value: 0.5
+      med color: 255; 0; 0
+      med color change threthold: 0
+      min value: -0.5
+      show caption: true
+      size: 128
+      text size: 14
+      top: 30
+    - Align Bottom: false
+      Background Alpha: 0
+      Background Color: 0; 0; 0
+      Class: jsk_rviz_plugin/String
+      Enabled: true
+      Foreground Alpha: 0.800000011920929
+      Foreground Color: 25; 255; 240
+      Name: Team
+      Overtake Color Properties: true
+      Overtake Position Properties: true
+      Topic: /visulaization/team_name
+      Value: true
+      font: DejaVu Sans Mono
+      height: 128
+      left: 20
+      line width: 2
+      text size: 19
+      top: 40
+      width: 128
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -182,10 +246,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2153984159231186
+      Pitch: 0.21039843559265137
       Target Frame: ego
       Value: ThirdPersonFollower (rviz)
-      Yaw: 3.058581829071045
+      Yaw: 3.0685815811157227
     Saved: ~
 Window Geometry:
   Displays:
