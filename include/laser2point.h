@@ -42,5 +42,5 @@ class laser2point{
         void scanCallback(const sensor_msgs::LaserScan::ConstPtr& scan);
         void tf_laser2point();
         void pub_pointcloud();
-        bool get_transform();
+//        bool get_transform();
 };
