@@ -26,7 +26,7 @@
 	└── kkanbu_visualization
 
 
-######## ------------ Global Planning ------------- ##########
+# Global Planning 
 
 Input 1 : Ego position of robot from GNSS               [Start Point]
 
@@ -40,7 +40,7 @@ Output : Global Path                                    [nav_msgs::Path]
 4. Interpolate Path from A*
 5. Publish Path to Local Planning
 
-######## ------------ Local Planning ------------- ##########
+# Local Planning 
 
 Input 1 : Ego position of robot from GNSS               [Start Point]
 
@@ -56,7 +56,7 @@ Output : Best Local Path robot will be followed
 4. Costing paths with not collision
 5. Selecting Best Path and publish
 
-######## ------------- Control ----------------- ################
+# Control 
 
 Input 1 : Vehicle State from GNSS - position, velocity,yaw, yawrate?
 
