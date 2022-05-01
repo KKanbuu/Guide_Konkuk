@@ -40,14 +40,14 @@ class indexPub{
 
     public:
         void pubInit(){
-            x_init.data = 1;   // x좌표 초기 값 
-            y_init.data = -sqrt(3);   // y좌표 초기 값
+            x_init.data = 0;   // x좌표 초기 값 원점
+            y_init.data = 0;   // y좌표 초기 값 원점
             pub_init_x.publish(x_init);
             pub_init_y.publish(y_init);
         }
         void pubIdx(){
-            x_slot.data = 1;   // x좌표 최종 값
-	        y_slot.data = sqrt(3);   // y좌표 최종 값
+            x_slot.data = 5;   //  offset distance: 0.5m(x좌표 최종값)
+	        y_slot.data = 20;   // look ahead distance:2m (y좌표 최종값)
             pub_goal_x.publish(x_slot); 
 	        pub_goal_y.publish(y_slot); 
         }
