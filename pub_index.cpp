@@ -5,8 +5,10 @@
 #include<iostream>
 
 //ROS header
-#include<ros/ros.h>
-#include<tf/tf.h>
+#include <ros/ros.h>
+#include <tf/tf.h>
+#include "local_planning/MyFirstMsg.h"
+#include "local_planning/SensorPoint.h"
 
 
 //Message header
@@ -23,11 +25,7 @@ class indexPub{
             //pub_init_y=nh_.advertise<std_msgs::Float64>("/y_init",100);
             pub_goal_x = nh_.advertise<std_msgs::Float64>("/x_slot",100);
 	        pub_goal_y = nh_.advertise<std_msgs::Float64>("/y_slot",100);
-            pub_obstacle_x = nh_.advertise<std_msgs::Float64>("/x_obs",100);
-            pub_obstacle_y = nh_.advertise<std_msgs::Float64>("/y_obs",100);
-            pub_obstacle_r = nh_.advertise<std_msgs::Float64>("/size_obs",100);
-            abc[3]=nh_.advertise<std_msgs::Float64>("abc",100);;   // 행렬 publish subsribe 어떻게 하는지..
-
+            pub_obstacle = nh_.advertise<local_planning::SensorPoint>("/obs",100);
         }
     
     private:
@@ -36,19 +34,22 @@ class indexPub{
         //ros::Publisher pub_init_y;
         ros::Publisher pub_goal_x;
 	    ros::Publisher pub_goal_y;
-        ros::Publisher pub_obstacle_x;
-        ros::Publisher pub_obstacle_y;
-        ros::Publisher pub_obstacle_r;
-        ros::Publisher abc[3];   // 행렬 publish subsribe 어떻게 하는지..
+        ros::Publisher pub_obstacle;
+        
+        ros::Publisher number_of_obstacle;
 
-        //std_msgs::Float64 x_init;
-	    //std_msgs::Float64 y_init;
+
         std_msgs::Float64 x_slot;
 	    std_msgs::Float64 y_slot;
-        std_msgs::Float64 x_obs;
-        std_msgs::Float64 y_obs;
-        std_msgs::Float64 size_obs;
-        std_msgs::Float64 obs[3]; // 행렬 publish subsribe 어떻게 하는지..
+        std_msgs::Float64 obs_info[3];
+        local_planning::MyFirstMsg times;
+        local_planning::SensorPoint point;
+
+        int num=3;
+
+        bool obs_state[10];
+
+        double exam_matrix[10][3];
 
 
     public:
@@ -58,6 +59,21 @@ class indexPub{
             pub_init_x.publish(x_init);
             pub_init_y.publish(y_init);
         }*/
+        void test_mat(){
+            exam_matrix[0][0] = -4;  exam_matrix[0][1] = 7;  exam_matrix[0][2] = 1;  obs_state[0]=true;
+            exam_matrix[1][0] = -1;  exam_matrix[1][1] = 5;  exam_matrix[1][2] = 1;  obs_state[1]=true;
+            exam_matrix[2][0] = 0;  exam_matrix[2][1] = 6;  exam_matrix[2][2] = 1;   obs_state[2]=true;
+            exam_matrix[3][0] = 7;  exam_matrix[3][1] = 8;  exam_matrix[3][2] = 1;   obs_state[3]=true;
+        }
+        void test_obs(){
+            for(int i=0;i<3;i++){
+                point.x=exam_matrix[i][0];
+                point.y=exam_matrix[i][1];
+                point.r=exam_matrix[i][2];
+                point.mode=obs_state[i];
+                times.obs_info.push_back(point);
+            }
+        }
         void pubIdx(){
             x_slot.data = 5;   //  offset distance: 0.5m(x좌표 최종값)
 	        y_slot.data = 20;   // look ahead distance:2m (y좌표 최종값)
@@ -65,12 +81,10 @@ class indexPub{
 	        pub_goal_y.publish(y_slot); 
         }
         void pubObstacle(){
-            x_obs.data=7;
-            y_obs.data=8;
-            size_obs.data=5;
-            pub_obstacle_x.publish(x_obs);
-            pub_obstacle_y.publish(y_obs);
-            pub_obstacle_r.publish(size_obs);    
+            obs_info[0].data=7;
+            obs_info[1].data=8;
+            obs_info[2].data=5;
+            pub_obstacle.publish(obs_info);
         }
 };
 

@@ -16,8 +16,12 @@
 #include<std_msgs/Float64MultiArray.h>
 #include<std_msgs/Float64.h>
 #include<std_msgs/Int32.h>
+#include "local_planning/MyFirstMsg.h"
+#include "local_planning/SensorPoint.h"
+
 
 //Using
+using namespace std;
 using std::pow;
 using std::cos;
 using std::sin;
@@ -39,9 +43,7 @@ class pointPub{
 	            // Subscriber 객체 선언, topic의 이름 x/slot_idx, 메시지 큐의 크기가 100
             sub_y_goal= nh.subscribe("/y_slot",100,&pointPub::y_Callback,this);
 	            // Subscriber 객체 선언, topic의 이름 y/slot_idx, 메시지 큐의 크기가 100
-            sub_obstacle_x=nh.subscribe("/x_obs",100,&pointPub::x_Hurdle,this);
-            sub_obstacle_y=nh.subscribe("/y_obs",100,&pointPub::y_Hurdle,this);
-            sub_obstacle_size=nh.subscribe("/size_obs",100,&pointPub::r_Hurdle,this);
+            sub_obstacle=nh.subscribe("/obs",100,&pointPub::Hurdle,this);
             //pub_pose=nh.advertise<nav_msgs::Path>("xy_pose",100);   //(5,20)
 	            // Publisher 객체 선언, topic의 이름 xy_pose, 메시지 큐의 크기가 100
             pub_pose_1=nh.advertise<nav_msgs::Path>("xy_pose_1",100);  
@@ -65,9 +67,9 @@ class pointPub{
         ros::Publisher pub_pose_4;
         ros::Subscriber sub_x_goal;
         ros::Subscriber sub_y_goal;
-        ros::Subscriber sub_obstacle_x;
-        ros::Subscriber sub_obstacle_y;
-        ros::Subscriber sub_obstacle_size; 
+        ros::Subscriber sub_obstacle;
+         
+        ros::Subscriber test_sub;
 
         geometry_msgs::PoseStamped goal;
         geometry_msgs::PoseStamped init;
@@ -75,6 +77,7 @@ class pointPub{
         nav_msgs::Path path_2;
         nav_msgs::Path path_3;
         nav_msgs::Path path_4;
+        local_planning::MyFirstMsg times;
 
         tf::Quaternion slope_1;
         tf::Quaternion slope_2;
@@ -91,7 +94,9 @@ class pointPub{
         double hurdle_x;
         double hurdle_y;
         double hurdle_r;
-        bool path_collision[4]={true,true,true,true};
+        bool hurdle_state;
+        bool path_collision[4]={true,true,true,true};  // false면 충돌, true면 충돌x
+        int obs_num;
         
         double PI = 3.141592;
         double m;
@@ -169,23 +174,48 @@ class pointPub{
         }
 
         void check_collision(){
-            double collision_dis = hurdle_r + vehicle_r;
-        
-            for(int i=0;i<2*k;i++){
-                if(collision_dis>=pow((first_point_info[i][0]-hurdle_x),2)+pow((first_point_info[i][1]-hurdle_y),2)){
-                    path_collision[0]=false;
-                }
-                if(collision_dis>=pow((-first_point_info[i][0]-hurdle_x),2)+pow((first_point_info[i][1]-hurdle_y),2)){
-                    path_collision[1]=false;
-                }
-                if(collision_dis>=pow((third_point_info[i][0]-hurdle_x),2)+pow((third_point_info[i][1]-hurdle_y),2)){
-                    path_collision[2]=false;
-                }
-                if(collision_dis>=pow((-third_point_info[i][0]-hurdle_x),2)+pow((third_point_info[i][1]-hurdle_y),2)){
-                    path_collision[3]=false;
-                }
+            if(obs_num==0){      // 장애물 갯수가 없다면 모든 회피 경로 publish 가능 
+                cal_point();
             }
-            cal_point();
+            else{
+                for(int i=0;i<obs_num;i++){
+                    hurdle_x=times.obs_info[i].x;
+                    hurdle_y=times.obs_info[i].y;
+                    hurdle_r=times.obs_info[i].r;
+                    hurdle_state = times.obs_info[i].mode;
+
+                    if(hurdle_state==false){    // 동적 장애물이 있다면 어떤 회피 경로도 publish 못하게 함. 충돌 계산 종료. 
+                        path_collision[0]=false;
+                        path_collision[1]=false;
+                        path_collision[2]=false;
+                        path_collision[3]=false;
+                        break;
+                    }
+
+                    double collision_dis = hurdle_r + vehicle_r;
+                    double w= hurdle_x;
+                    double e= hurdle_y;
+                
+                    for(int i=0;i<2*k;i++){
+                        if(collision_dis>=pow((first_point_info[i][0]-w),2)+pow((first_point_info[i][1]-e),2)){
+                            path_collision[0]=false;
+                        }
+                        if(collision_dis>=pow((-first_point_info[i][0]-w),2)+pow((first_point_info[i][1]-e),2)){
+                            path_collision[1]=false;
+                        }
+                        if(collision_dis>=pow((third_point_info[i][0]-w),2)+pow((third_point_info[i][1]-e),2)){
+                            path_collision[2]=false;
+                        }
+                        if(collision_dis>=pow((-third_point_info[i][0]-w),2)+pow((third_point_info[i][1]-e),2)){
+                            path_collision[3]=false;
+                        }
+                    }
+                }
+                cal_point();
+            }
+            
+            
+           
         }
 
         void x_Callback(const std_msgs::Float64ConstPtr &msg){
@@ -200,14 +230,9 @@ class pointPub{
             first_point_info[k-1][1]=d;
             Is_Callback_final_2=true;
         }
-        void x_Hurdle(const std_msgs::Float64ConstPtr &msg){
-            hurdle_x=msg->data;
-        }
-        void y_Hurdle(const std_msgs::Float64ConstPtr &msg){
-            hurdle_y=msg->data;
-        }
-        void r_Hurdle(const std_msgs::Float64ConstPtr &msg){
-            hurdle_r=msg->data;
+        void Hurdle(const local_planning::MyFirstMsg::ConstPtr &msg){     // 장애물의 x,y,r,mode의 정보를 받아오는 콜백함수 
+            times.obs_info=msg->obs_info;
+            obs_num=times.obs_info.size();
         }
 
         void cal_point(){
