@@ -1,7 +1,0 @@
-<launch>
-
-	<node pkg="local_planning" type="pub_index" name="Input_goal" output="screen"/>
-
-	<node pkg="local_planning" type="pub_path" name="Cal_path" output="screen"/>
-
-</launch>
