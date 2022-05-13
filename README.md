@@ -1,7 +1,11 @@
 # Guide_Konkuk
 # This is Jeonghun Branch of KKanbu!
 
-############### Algorithm Description of guide robot of konkuk #####################################
+# How To Run Algorithm
+1. sh kkanbu.sh
+2. open another terminal
+3. go into arduino/libraries
+"rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=57600"
 
 # File Tree
 

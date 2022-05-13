@@ -8,7 +8,7 @@ Control_Robot::Control_Robot(){
     
     // Publisher
     pub_ControlCommand = nh_.advertise<kkanbu_msgs::ControlCommand>("/ego/control_cmd",10);
-
+    pub_ArduinoCommand = nh_.advertise<kkanbu_msgs::ControlCommand>("/ego/arduino_cmd",10);
     // Subscriber
     sub_VehicleState = nh_.subscribe("/ego/vehicle_state",10,&Control_Robot::get_VehicleState,this);
     sub_LocalPath = nh_.subscribe("/map/entire_path",10,&Control_Robot::get_LocalPath,this);
@@ -29,9 +29,10 @@ void Control_Robot::LongitudinalControl(){
     double error_velocity = target_velocity_ - vehicle_state_.velocity;
     if(error_velocity < 0){
         control_cmd_.accel = 0;
-        control_cmd_.brake = fabs(error_velocity);
+        control_cmd_.brake = fabs(error_velocity) * p_gain_;
     }else{
-        control_cmd_.accel = error_velocity;
+        control_cmd_.accel = error_velocity;//error_velocity * p_gain_;
+        arduino_control_cmd_.accel = 100;
         control_cmd_.brake = 0;
     }
 }
@@ -56,6 +57,7 @@ void Control_Robot::LateralControl(){
         double lookAhead_distance = sqrt(pow(vehicle_state_.x - lookAhead_Pose_.pose.position.x,2)+pow(vehicle_state_.y - lookAhead_Pose_.pose.position.y,2));
         double alpha = atan2(lookAhead_Pose_.pose.position.y -vehicle_state_.y,lookAhead_Pose_.pose.position.x -vehicle_state_.x ) - vehicle_state_.yaw;
         control_cmd_.steering = atan2(2 * wheelBase_ * sin(alpha),lookAhead_distance);
+        arduino_control_cmd_.steering = -(control_cmd_.steering * (180/PI) * 10) + 90;//-();
     }else{
         control_cmd_.steering = 0;
         ROS_WARN("Path isn't subscribed yet!");
@@ -67,6 +69,7 @@ void Control_Robot::Publish_ControlCommand(){
     LongitudinalControl();
     LateralControl();
     pub_ControlCommand.publish(control_cmd_);
+    pub_ArduinoCommand.publish(arduino_control_cmd_);
 }
 
 int main(int argc, char** argv) {

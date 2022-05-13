@@ -23,7 +23,7 @@ void Visualizatoin::get_vehicleState(const kkanbu_msgs::VehicleState::ConstPtr& 
 
 void Visualizatoin::get_controlCommand(const kkanbu_msgs::ControlCommand::ConstPtr& msg){
   ego_cmd_ = *msg;
-  ego_steering_.data = ego_cmd_.steering;
+  ego_steering_.data = ego_cmd_.steering*(180/3.141592);
 }
 
 void Visualizatoin::makeVehicleModelMarker(){

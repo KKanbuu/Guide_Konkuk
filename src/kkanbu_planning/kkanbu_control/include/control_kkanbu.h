@@ -19,6 +19,7 @@ class Control_Robot{
         ros::NodeHandle nh_;
         
         ros::Publisher pub_ControlCommand;
+        ros::Publisher pub_ArduinoCommand;
 
         ros::Subscriber sub_VehicleState;
         ros::Subscriber sub_LocalPath;
@@ -30,7 +31,7 @@ class Control_Robot{
         // Callback Func
         void get_VehicleState(const kkanbu_msgs::VehicleState::ConstPtr& msg);
         void get_LocalPath(const nav_msgs::Path::ConstPtr& msg);
-
+        
         //Func
         void LongitudinalControl();
         void LateralControl();
@@ -49,6 +50,7 @@ class Control_Robot{
 
         //Output
         kkanbu_msgs::ControlCommand control_cmd_;
+        kkanbu_msgs::ControlCommand arduino_control_cmd_;
 
         // Variables
         int closest_idx_;
