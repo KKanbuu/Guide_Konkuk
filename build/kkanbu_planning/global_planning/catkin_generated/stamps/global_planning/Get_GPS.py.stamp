@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from os import path
 import pandas as pd
 import numpy as np
 import rospy
@@ -7,7 +8,8 @@ from geometry_msgs.msg import Quaternion
 from std_msgs.msg import String, Empty
 from nav_msgs.msg import Path
 from tf.transformations import quaternion_from_euler
-
+from kkanbu_msgs.msg import LandmarkPath
+from kkanbu_msgs.msg import LandmarkPoint
 
 class GlobalPlanner():
     def __init__(self):
@@ -26,11 +28,14 @@ class GlobalPlanner():
         self._y_list = []
         self._yaw_list = []
         self._entire_path = Path()
+        self._landmark_path=LandmarkPath()
 
         # Publisher
         self.entire_path_publisher = rospy.Publisher(
             "/map/entire_path",Path,queue_size=1)
 
+        self.landmark_publisher = rospy.Publisher(
+            "/map/landmark_point",LandmarkPath,queue_size=1)
         # Subscriber
 
     def destroy(self):
@@ -59,11 +64,16 @@ class GlobalPlanner():
         self._entire_path.header.stamp = rospy.Time.now()
         if self._data is not None:
             for i in range(len(self._data.index)):
-                if i % 20 == 0:
+                if i % 30 == 0:
                     pose = PoseStamped()
+                    point = LandmarkPoint()
                     pose.pose.position.x = self._x_list[i]
                     pose.pose.position.y = self._y_list[i]
                     pose.pose.position.z = 0.0
+                    point.x =  self._x_list[i]
+                    point.y = self._y_list[i]
+                    point.yaw=self._yaw_list[i]
+                    
 
                     q = quaternion_from_euler(0.0, 0.0,self._yaw_list[i])
                     pose.pose.orientation.x = q[0]
@@ -71,13 +81,16 @@ class GlobalPlanner():
                     pose.pose.orientation.z = q[2]
                     pose.pose.orientation.w = q[3]
                     self._entire_path.poses.append(pose)
+                    self._landmark_path.path.append(point)
 
 
             
             rospy.loginfo("Published {} waypoints.".format(len(self._entire_path.poses)))
 
+    
     def publish_entire_path(self):
         self.entire_path_publisher.publish(self._entire_path)
+        self.landmark_publisher.publish(self._landmark_path)
 
     def run(self):
         rate = rospy.Rate(100)

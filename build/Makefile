@@ -1234,6 +1234,19 @@ kkanbu_visualization/fast:
 .PHONY : kkanbu_visualization/fast
 
 #=============================================================================
+# Target rules for targets named global_planning
+
+# Build rule for target.
+global_planning: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 global_planning
+.PHONY : global_planning
+
+# fast build rule for target.
+global_planning/fast:
+	$(MAKE) -f kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build.make kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build
+.PHONY : global_planning/fast
+
+#=============================================================================
 # Target rules for targets named local_planning_geneus
 
 # Build rule for target.
@@ -1510,6 +1523,7 @@ help:
 	@echo "... visualization_msgs_generate_messages_py"
 	@echo "... visualization_msgs_generate_messages_nodejs"
 	@echo "... kkanbu_visualization"
+	@echo "... global_planning"
 	@echo "... local_planning_geneus"
 	@echo "... local_planning_gencpp"
 	@echo "... local_planning_generate_messages_cpp"

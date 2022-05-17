@@ -68,26 +68,17 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
 
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target test
 test:
@@ -100,17 +91,26 @@ test/fast: test
 
 .PHONY : test/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -167,6 +167,48 @@ depend:
 	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/rule:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/rule
+.PHONY : kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/rule
+
+# Convenience name for target.
+global_planning: kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/rule
+
+.PHONY : global_planning
+
+# fast build rule for target.
+global_planning/fast:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build.make kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build
+.PHONY : global_planning/fast
+
+src/get_wp.o: src/get_wp.cpp.o
+
+.PHONY : src/get_wp.o
+
+# target to build an object file
+src/get_wp.cpp.o:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build.make kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/src/get_wp.cpp.o
+.PHONY : src/get_wp.cpp.o
+
+src/get_wp.i: src/get_wp.cpp.i
+
+.PHONY : src/get_wp.i
+
+# target to preprocess a source file
+src/get_wp.cpp.i:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build.make kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/src/get_wp.cpp.i
+.PHONY : src/get_wp.cpp.i
+
+src/get_wp.s: src/get_wp.cpp.s
+
+.PHONY : src/get_wp.s
+
+# target to generate assembly for a file
+src/get_wp.cpp.s:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/build.make kkanbu_planning/global_planning/CMakeFiles/global_planning.dir/src/get_wp.cpp.s
+.PHONY : src/get_wp.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -174,12 +216,16 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... edit_cache"
-	@echo "... list_install_components"
-	@echo "... test"
 	@echo "... install/local"
+	@echo "... test"
+	@echo "... list_install_components"
+	@echo "... global_planning"
+	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... install"
+	@echo "... src/get_wp.o"
+	@echo "... src/get_wp.i"
+	@echo "... src/get_wp.s"
 .PHONY : help
 
 

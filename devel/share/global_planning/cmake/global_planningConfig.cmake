@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(global_planning_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/global_planning/src " STREQUAL " ")
+if(NOT " " STREQUAL " ")
   set(global_planning_INCLUDE_DIRS "")
-  set(_include_dirs "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/global_planning/src")
+  set(_include_dirs "")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -185,7 +185,7 @@ foreach(t ${global_planning_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;rospy;tf;tf2;nav_msgs;geometry_msgs;std_msgs")
+set(depends "")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
