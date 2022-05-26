@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   geometry_msgs
   std_msgs
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -51,6 +52,8 @@ add_message_files(
   FILES
   ControlCommand.msg
   VehicleState.msg
+  SensorPointArray.msg
+  SensorPoint.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -71,6 +74,7 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   geometry_msgs
+  nav_msgs
   std_msgs  # Or other packages containing msgs
 )
 
@@ -106,7 +110,7 @@ generate_messages(
 catkin_package(
   #INCLUDE_DIRS include
   #LIBRARIES autonomous_msg
-  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs nav_msgs
 #  DEPENDS system_lib
 )
 
