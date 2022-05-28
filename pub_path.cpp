@@ -18,8 +18,6 @@
 #include<std_msgs/Int32.h>
 #include "kkanbu_msgs/SensorPointArray.h"
 #include "kkanbu_msgs/SensorPoint.h"
-#include "kkanbu_msgs/LocalPathArray.h"
-#include "kkanbu_msgs/LocalPath.h"
 #include "kkanbu_msgs/VehicleState.h"
 
 
@@ -39,14 +37,13 @@ class pointPub{
             sub_VehicleState = nh.subscribe("/ego/vehicle_state",10,&pointPub::get_VehicleState,this);
             sub_GlobalPath = nh.subscribe("/map/entire_path",10,&pointPub::get_GlobalPath,this);
 	            // Publisher 객체 선언, topic의 이름 xy_pose, 메시지 큐의 크기가 100
-            // pub_PathArray=nh.advertise<kkanbu_msgs::LocalPathArray>("five_local_path",10);  
             //path_.header.frame_id = "/ego";
             // path_1.header.frame_id = "/map";
-            pub_pose_1=nh.advertise<nav_msgs::Path>("xy_pose_1",10);  
-            pub_pose_2=nh.advertise<nav_msgs::Path>("xy_pose_2",10);   
-            pub_pose_3=nh.advertise<nav_msgs::Path>("xy_pose_3",10);   
-            pub_pose_4=nh.advertise<nav_msgs::Path>("xy_pose_4",10);
-            pub_pose_st = nh.advertise<nav_msgs::Path>("xy_pose_st",10);
+            pub_pose=nh.advertise<nav_msgs::Path>("/local/best_path",10);  
+            // pub_pose_2=nh.advertise<nav_msgs::Path>("xy_pose_2",10);   
+            // pub_pose_3=nh.advertise<nav_msgs::Path>("xy_pose_3",10);   
+            // pub_pose_4=nh.advertise<nav_msgs::Path>("xy_pose_4",10);
+            // pub_pose_st = nh.advertise<nav_msgs::Path>("xy_pose_st",10);
             path_1.header.frame_id = "/ego";
             path_2.header.frame_id = "/ego";
             path_3.header.frame_id = "/ego";
@@ -67,9 +64,7 @@ class pointPub{
         nav_msgs::Path path_3;
         nav_msgs::Path path_4;
         nav_msgs::Path straight_path;
-        kkanbu_msgs::LocalPathArray local_array;
         kkanbu_msgs::SensorPointArray HurdleArray;
-        kkanbu_msgs::LocalPath path_tools;
         nav_msgs::Path global_path;
         kkanbu_msgs::VehicleState vehicle_state_;
 
@@ -80,11 +75,11 @@ class pointPub{
         ros::Subscriber sub_LocalPath;
         ros::Subscriber sub_GlobalPath;
 
-        ros::Publisher pub_pose_1;
-        ros::Publisher pub_pose_2;
-        ros::Publisher pub_pose_3;
-        ros::Publisher pub_pose_4;
-        ros::Publisher pub_pose_st;
+        ros::Publisher pub_pose;
+        // ros::Publisher pub_pose_2;
+        // ros::Publisher pub_pose_3;
+        // ros::Publisher pub_pose_4;
+        // ros::Publisher pub_pose_st;
 
         // ros::Publisher pub_PathArray;
         //Control_Robot control;
@@ -128,7 +123,7 @@ class pointPub{
 
         int closest_idx_;
         int sum_possible = 0;
-        bool isPath = false;
+        bool GLPATH = false;
         int lookAhead_idx_;
         geometry_msgs::PoseStamped lookAhead_Pose_;
         double local_distance[5]={1000,1000,1000,1000,1000};
@@ -166,7 +161,7 @@ class pointPub{
 
         void get_GlobalPath(const nav_msgs::Path::ConstPtr& msg){
             global_path = *msg;
-            isPath = true;
+            GLPATH = true;
         }
 
         
@@ -303,7 +298,9 @@ class pointPub{
 
         void check_collision(){
             if(obs_num == 0){      // 장애물 개수가 없다면 모든 회피 경로 publish 가능 
-                find_ClosestWaypoint();
+                sum_possible = 5;
+                // find_ClosestWaypoint();
+                publish_local_path();
             }
             else{
                 for(int i=0;i<obs_num;i++){
@@ -358,8 +355,9 @@ class pointPub{
                     sum_possible++;
                 }
             }
-            // ROS_INFO_STREAM(sum_possible);
-            find_ClosestWaypoint();
+            ROS_INFO_STREAM(sum_possible);
+            // find_ClosestWaypoint();
+            publish_local_path();
         }
 
 
@@ -369,7 +367,7 @@ class pointPub{
         void find_ClosestWaypoint(){
             double min_distance = 1000;
     
-            if(isPath){
+            if(GLPATH){
                 for(int i=0;i<global_path.poses.size();i++){
                     double temp_distance = sqrt(pow(vehicle_state_.x - global_path.poses[i].pose.position.x,2)+pow(vehicle_state_.y - global_path.poses[i].pose.position.y,2));
                     if(temp_distance < min_distance){
@@ -395,7 +393,7 @@ class pointPub{
 
         void measure_distance(){
             if(sum_possible == 0){
-                ROS_INFO_STREAM("STOP!!");
+                // ROS_INFO_STREAM("STOP!!");
             }
             else if(sum_possible == 1){
                 for(int i=0;i<5;i++){
@@ -419,20 +417,26 @@ class pointPub{
         }
 
         void publish_local_path(){
+            proper_idx == 4;
             if(proper_idx == 0){
-                pub_pose_1.publish(path_1);
+                pub_pose.publish(path_1);
+                ROS_INFO_STREAM("path_111");
             }
             else if(proper_idx == 1){
-                pub_pose_2.publish(path_2);
+                pub_pose.publish(path_2);
+                ROS_INFO_STREAM("path_222");
             }
             else if(proper_idx == 2){
-                pub_pose_3.publish(path_3);
+                pub_pose.publish(path_3);
+                ROS_INFO_STREAM("path_333");
             }
             else if(proper_idx == 3){
-                pub_pose_4.publish(path_4);
+                pub_pose.publish(path_4);
+                ROS_INFO_STREAM("path_444");
             }
             else{
-                pub_pose_st.publish(straight_path);
+                pub_pose.publish(straight_path);
+                ROS_INFO_STREAM("path_st");
             }
         }
         
