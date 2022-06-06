@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(local_planning_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/jh/Documents/GitHub/Guide_Konkuk/devel/include;/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/include " STREQUAL " ")
+if(NOT " " STREQUAL " ")
   set(local_planning_INCLUDE_DIRS "")
-  set(_include_dirs "/home/jh/Documents/GitHub/Guide_Konkuk/devel/include;/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/include")
+  set(_include_dirs "")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -116,7 +116,7 @@ if(NOT "/home/jh/Documents/GitHub/Guide_Konkuk/devel/include;/home/jh/Documents/
   endforeach()
 endif()
 
-set(libraries "local_planning")
+set(libraries "")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(local_planning_EXPORTED_TARGETS "local_planning_generate_messages_cpp;local_planning_generate_messages_eus;local_planning_generate_messages_lisp;local_planning_generate_messages_nodejs;local_planning_generate_messages_py")
+set(local_planning_EXPORTED_TARGETS "")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${local_planning_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -185,7 +185,7 @@ foreach(t ${local_planning_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "message_generation;roscpp;std_msgs")
+set(depends "")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   list(APPEND local_planning_EXPORTED_TARGETS ${${local_planning_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "local_planning-msg-extras.cmake")
+set(pkg_cfg_extras "")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${local_planning_DIR}/${extra})

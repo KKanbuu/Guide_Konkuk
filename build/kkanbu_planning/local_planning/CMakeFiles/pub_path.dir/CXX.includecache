@@ -33,6 +33,8 @@ std_msgs/Float64.h
 -
 std_msgs/Int32.h
 -
+kkanbu_msgs/VehicleState.h
+/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/src/kkanbu_msgs/VehicleState.h
 
 /opt/ros/melodic/include/geometry_msgs/Point.h
 string

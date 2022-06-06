@@ -1,7 +1,12 @@
 file(REMOVE_RECURSE
   "CMakeFiles/kkanbu_msgs_generate_messages_py"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_LandmarkPath.py"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_LocalPathArray.py"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_VehicleState.py"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_SensorPointArray.py"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_SensorPoint.py"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_ControlCommand.py"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/_LandmarkPoint.py"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/kkanbu_msgs/msg/__init__.py"
 )
 

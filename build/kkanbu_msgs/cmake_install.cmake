@@ -41,6 +41,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/kkanbu_msgs/msg" TYPE FILE FILES
     "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/ControlCommand.msg"
     "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/VehicleState.msg"
+    "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/SensorPointArray.msg"
+    "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/SensorPoint.msg"
+    "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/LandmarkPath.msg"
+    "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/LandmarkPoint.msg"
+    "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_msgs/msg/LocalPathArray.msg"
     )
 endif()
 

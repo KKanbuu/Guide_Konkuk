@@ -53,23 +53,6 @@ CMAKE_BINARY_DIR = /home/jh/Documents/GitHub/Guide_Konkuk/build
 # Include the progress variables for this target.
 include kkanbu_planning/local_planning/CMakeFiles/local_planning_generate_messages_py.dir/progress.make
 
-kkanbu_planning/local_planning/CMakeFiles/local_planning_generate_messages_py: /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/_MyFirstMsg.py
-kkanbu_planning/local_planning/CMakeFiles/local_planning_generate_messages_py: /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/__init__.py
-
-
-/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/_MyFirstMsg.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
-/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/_MyFirstMsg.py: /home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/msg/MyFirstMsg.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/jh/Documents/GitHub/Guide_Konkuk/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG local_planning/MyFirstMsg"
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/local_planning && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/msg/MyFirstMsg.msg -Ilocal_planning:/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p local_planning -o /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg
-
-/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/__init__.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
-/home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/__init__.py: /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/_MyFirstMsg.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/jh/Documents/GitHub/Guide_Konkuk/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for local_planning"
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/local_planning && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg --initpy
-
-local_planning_generate_messages_py: kkanbu_planning/local_planning/CMakeFiles/local_planning_generate_messages_py
-local_planning_generate_messages_py: /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/_MyFirstMsg.py
-local_planning_generate_messages_py: /home/jh/Documents/GitHub/Guide_Konkuk/devel/lib/python2.7/dist-packages/local_planning/msg/__init__.py
 local_planning_generate_messages_py: kkanbu_planning/local_planning/CMakeFiles/local_planning_generate_messages_py.dir/build.make
 
 .PHONY : local_planning_generate_messages_py

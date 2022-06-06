@@ -56,16 +56,6 @@ CMAKE_BINARY_DIR = /home/jh/Documents/GitHub/Guide_Konkuk/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -88,6 +78,16 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -112,17 +112,6 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
@@ -134,6 +123,17 @@ install/strip/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,81 +168,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule
-
-# Convenience name for target.
-communication_arduino: kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule
-
-.PHONY : communication_arduino
-
-# fast build rule for target.
-communication_arduino/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/build
-.PHONY : communication_arduino/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_py.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-nav_msgs_generate_messages_py: kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-
-.PHONY : nav_msgs_generate_messages_py
-
-# fast build rule for target.
-nav_msgs_generate_messages_py/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_py.dir/build
-.PHONY : nav_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-nav_msgs_generate_messages_nodejs: kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : nav_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-nav_msgs_generate_messages_nodejs/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build
-.PHONY : nav_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-nav_msgs_generate_messages_lisp: kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : nav_msgs_generate_messages_lisp
-
-# fast build rule for target.
-nav_msgs_generate_messages_lisp/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build
-.PHONY : nav_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-nav_msgs_generate_messages_eus: kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
-
-.PHONY : nav_msgs_generate_messages_eus
-
-# fast build rule for target.
-nav_msgs_generate_messages_eus/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_eus.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_eus.dir/build
-.PHONY : nav_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
 kkanbu_communication/communication_arduino/CMakeFiles/tf_generate_messages_eus.dir/rule:
 	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/tf_generate_messages_eus.dir/rule
 .PHONY : kkanbu_communication/communication_arduino/CMakeFiles/tf_generate_messages_eus.dir/rule
@@ -271,21 +196,6 @@ rosgraph_msgs_generate_messages_eus: kkanbu_communication/communication_arduino/
 rosgraph_msgs_generate_messages_eus/fast:
 	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
 .PHONY : rosgraph_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_cpp: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_cpp
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_cpp/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build
-.PHONY : actionlib_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 kkanbu_communication/communication_arduino/CMakeFiles/tf_generate_messages_cpp.dir/rule:
@@ -361,21 +271,6 @@ rosgraph_msgs_generate_messages_nodejs: kkanbu_communication/communication_ardui
 rosgraph_msgs_generate_messages_nodejs/fast:
 	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
 .PHONY : rosgraph_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_nodejs: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_nodejs/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build
-.PHONY : actionlib_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
 kkanbu_communication/communication_arduino/CMakeFiles/tf_generate_messages_lisp.dir/rule:
@@ -648,21 +543,6 @@ actionlib_generate_messages_lisp/fast:
 .PHONY : actionlib_generate_messages_lisp/fast
 
 # Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_nodejs: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-
-.PHONY : actionlib_generate_messages_nodejs
-
-# fast build rule for target.
-actionlib_generate_messages_nodejs/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
-.PHONY : actionlib_generate_messages_nodejs/fast
-
-# Convenience name for target.
 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_py.dir/rule:
 	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_py.dir/rule
 .PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_py.dir/rule
@@ -676,51 +556,6 @@ actionlib_generate_messages_py: kkanbu_communication/communication_arduino/CMake
 actionlib_generate_messages_py/fast:
 	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_py.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_py.dir/build
 .PHONY : actionlib_generate_messages_py/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_eus: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_eus
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_eus/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build
-.PHONY : actionlib_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_lisp: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_lisp
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_lisp/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build
-.PHONY : actionlib_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_py: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_py
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_py/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build
-.PHONY : actionlib_msgs_generate_messages_py/fast
 
 # Convenience name for target.
 kkanbu_communication/communication_arduino/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule:
@@ -768,19 +603,34 @@ tf2_msgs_generate_messages_lisp/fast:
 .PHONY : tf2_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
-kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
-.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
+kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule
+.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule
 
 # Convenience name for target.
-nav_msgs_generate_messages_cpp: kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
+communication_arduino: kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/rule
 
-.PHONY : nav_msgs_generate_messages_cpp
+.PHONY : communication_arduino
 
 # fast build rule for target.
-nav_msgs_generate_messages_cpp/fast:
-	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build
-.PHONY : nav_msgs_generate_messages_cpp/fast
+communication_arduino/fast:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/communication_arduino.dir/build
+.PHONY : communication_arduino/fast
+
+# Convenience name for target.
+kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f CMakeFiles/Makefile2 kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
+.PHONY : kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_nodejs: kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
+
+.PHONY : actionlib_generate_messages_nodejs
+
+# fast build rule for target.
+actionlib_generate_messages_nodejs/fast:
+	cd /home/jh/Documents/GitHub/Guide_Konkuk/build && $(MAKE) -f kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make kkanbu_communication/communication_arduino/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
+.PHONY : actionlib_generate_messages_nodejs/fast
 
 src/communication.o: src/communication.cpp.o
 
@@ -815,26 +665,18 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... list_install_components"
-	@echo "... communication_arduino"
-	@echo "... install"
-	@echo "... nav_msgs_generate_messages_py"
-	@echo "... nav_msgs_generate_messages_nodejs"
-	@echo "... edit_cache"
-	@echo "... nav_msgs_generate_messages_lisp"
-	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... tf_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_eus"
-	@echo "... actionlib_msgs_generate_messages_cpp"
+	@echo "... install"
 	@echo "... tf_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
-	@echo "... actionlib_msgs_generate_messages_nodejs"
 	@echo "... tf_generate_messages_lisp"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_eus"
+	@echo "... edit_cache"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... tf_generate_messages_nodejs"
 	@echo "... tf2_msgs_generate_messages_nodejs"
@@ -842,27 +684,25 @@ help:
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_py"
+	@echo "... list_install_components"
 	@echo "... install/local"
 	@echo "... sensor_msgs_generate_messages_lisp"
-	@echo "... rebuild_cache"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_cpp"
+	@echo "... rebuild_cache"
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_eus"
 	@echo "... tf_generate_messages_py"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... actionlib_generate_messages_lisp"
-	@echo "... test"
-	@echo "... actionlib_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_py"
-	@echo "... actionlib_msgs_generate_messages_eus"
-	@echo "... actionlib_msgs_generate_messages_lisp"
-	@echo "... actionlib_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_cpp"
 	@echo "... install/strip"
 	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_lisp"
-	@echo "... nav_msgs_generate_messages_cpp"
+	@echo "... communication_arduino"
+	@echo "... actionlib_generate_messages_nodejs"
+	@echo "... test"
 	@echo "... src/communication.o"
 	@echo "... src/communication.i"
 	@echo "... src/communication.s"

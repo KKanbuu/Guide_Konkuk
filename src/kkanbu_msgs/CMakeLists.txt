@@ -54,6 +54,9 @@ add_message_files(
   VehicleState.msg
   SensorPointArray.msg
   SensorPoint.msg
+  LandmarkPath.msg
+  LandmarkPoint.msg
+  LocalPathArray.msg
 )
 
 ## Generate services in the 'srv' folder

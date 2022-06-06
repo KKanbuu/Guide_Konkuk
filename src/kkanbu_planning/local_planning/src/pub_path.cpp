@@ -19,7 +19,7 @@
 #include "kkanbu_msgs/SensorPointArray.h"
 #include "kkanbu_msgs/SensorPoint.h"
 #include "kkanbu_msgs/LocalPathArray.h"
-#include "kkanbu_msgs/LocalPath.h"
+// #include "kkanbu_msgs/LocalPath.h"
 #include "kkanbu_msgs/VehicleState.h"
 
 
@@ -69,7 +69,7 @@ class pointPub{
         nav_msgs::Path straight_path;
         kkanbu_msgs::LocalPathArray local_array;
         kkanbu_msgs::SensorPointArray HurdleArray;
-        kkanbu_msgs::LocalPath path_tools;
+        // kkanbu_msgs::LocalPath path_tools;
         nav_msgs::Path global_path;
         kkanbu_msgs::VehicleState vehicle_state_;
 
@@ -461,6 +461,6 @@ int main(int argc, char **argv){
         ros::spinOnce();
         rate.sleep();
     }
-    return 0;
+    // return 0;
 }
 

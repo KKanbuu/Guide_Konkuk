@@ -317,12 +317,6 @@ communication_arduino_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/b
 //Value Computed by CMake
 communication_arduino_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_communication/communication_arduino
 
-//Value Computed by CMake
-control_BINARY_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/build/kkanbu_planning/control
-
-//Value Computed by CMake
-control_SOURCE_DIR:STATIC=/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/control
-
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/melodic/share/cpp_common/cmake
 

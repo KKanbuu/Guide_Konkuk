@@ -1,2 +1,2 @@
-set(local_planning_MESSAGE_FILES "/home/jh/Documents/GitHub/Guide_Konkuk/src/kkanbu_planning/local_planning/msg/MyFirstMsg.msg")
+set(local_planning_MESSAGE_FILES "")
 set(local_planning_SERVICE_FILES "")

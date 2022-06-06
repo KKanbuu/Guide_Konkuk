@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/local_planning_generate_messages_eus"
-  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/local_planning/msg/MyFirstMsg.l"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/local_planning/manifest.l"
 )
 

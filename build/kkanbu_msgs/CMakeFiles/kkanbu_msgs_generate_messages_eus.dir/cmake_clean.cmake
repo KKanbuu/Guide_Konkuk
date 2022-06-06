@@ -1,7 +1,12 @@
 file(REMOVE_RECURSE
   "CMakeFiles/kkanbu_msgs_generate_messages_eus"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/LandmarkPath.l"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/LocalPathArray.l"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/VehicleState.l"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/SensorPointArray.l"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/SensorPoint.l"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/ControlCommand.l"
+  "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/msg/LandmarkPoint.l"
   "/home/jh/Documents/GitHub/Guide_Konkuk/devel/share/roseus/ros/kkanbu_msgs/manifest.l"
 )
 
