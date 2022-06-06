@@ -75,6 +75,9 @@ class Entire_Path{
         geometry_msgs::PoseStamped pose;
         tf::Quaternion q;
         //geometry_msgs::Quaternion quat_msg;
+        bool isSaveNodeDone = false;
+        bool isGetGraphDone = false;
+        bool isShortestPathDone = false;
 };
 
 

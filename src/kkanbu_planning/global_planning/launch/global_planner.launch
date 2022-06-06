@@ -5,6 +5,6 @@
 	<param name="map" value="$(arg map)"/>
 	
 	<node pkg='global_planning' type='Get_GPS.py' name='global_planningc_gps' output='screen' respawn='true'/>
-	<node pkg='global_planning' type='global_entire_path' name='global_planningc_wp' output='screen' respawn='true'/>	
+	<node pkg='global_planning' type='global_planning' name='global_planningc_wp' output='screen' respawn='false'/>	
 	<!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $/home/jh/Documents/GitHub/Guide_Konkuk/src/global_planning/map/map.rviz" /> -->
 </launch>
