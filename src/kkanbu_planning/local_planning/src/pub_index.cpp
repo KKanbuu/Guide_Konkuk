@@ -70,17 +70,17 @@ class indexPub{
         }
 };
 
-// int main(int argc, char **argv){
-//     ros::init(argc, argv,"pub_index");
-//     indexPub pubI;
+int main(int argc, char **argv){
+    ros::init(argc, argv,"pub_index");
+    indexPub pubI;
 
-//     ros::Rate rate(20);
+    ros::Rate rate(20);
     
-//     while(ros::ok()){
-//         pubI.pubIdx();
-//         pubI.test_mat();
-//         ros::spinOnce();
-//         rate.sleep();
-//     }
-// }
+    while(ros::ok()){
+        pubI.pubIdx();
+        pubI.test_mat();
+        ros::spinOnce();
+        rate.sleep();
+    }
+}
 

@@ -9,9 +9,10 @@ Control_Robot::Control_Robot(){
     // Publisher
     pub_ControlCommand = nh_.advertise<kkanbu_msgs::ControlCommand>("/ego/control_cmd",10);
     pub_ArduinoCommand = nh_.advertise<kkanbu_msgs::ControlCommand>("/ego/arduino_cmd",10);
+    pub_lookAheadPose = nh_.advertise<visualization_msgs::Marker>("/ego/lookahead_pose",10);
     // Subscriber
     sub_VehicleState = nh_.subscribe("/ego/vehicle_state",10,&Control_Robot::get_VehicleState,this);
-    sub_LocalPath = nh_.subscribe("/map/entire_path",10,&Control_Robot::get_LocalPath,this);
+    sub_LocalPath = nh_.subscribe("/local/best_path",10,&Control_Robot::get_LocalPath,this);
 }
 
 Control_Robot::~Control_Robot(){}
@@ -38,15 +39,18 @@ void Control_Robot::LongitudinalControl(){
 }
 
 geometry_msgs::PoseStamped Control_Robot::transformEgo2World(geometry_msgs::PoseStamped ego_frame_pose){
+    geometry_msgs::PoseStamped world_frame_pose;
+    world_frame_pose.header.frame_id = "/map";
     try{
-        geometry_msgs::PoseStamped world_frame_pose;
+        ego_frame_pose.header.frame_id = "/ego";
         ego2map.transformPose("/map",ego_frame_pose,world_frame_pose);
     }catch (tf::TransformException &ex){
         ROS_ERROR("%s",ex.what());
         // ros::Duration(1.0).sleep();
         // continue;
     }
-
+    return world_frame_pose;
+    
 
     // double min_distance = 1000;
     
@@ -59,10 +63,28 @@ geometry_msgs::PoseStamped Control_Robot::transformEgo2World(geometry_msgs::Pose
     // }
 }
 
+void Control_Robot::Make_LookAheadMarker(geometry_msgs::PoseStamped lookAhead_Pose){
+    lookAhead_pose_maker_.header.frame_id = "/map";
+    lookAhead_pose_maker_.header.stamp = ros::Time::now();
+    // lookAhead_pose_maker_.ns = "Lateral Control";
+    // lookAhead_pose_maker_.id = 0;
+    lookAhead_pose_maker_.type = visualization_msgs::Marker::SPHERE;
+    lookAhead_pose_maker_.pose.position.x = lookAhead_Pose.pose.position.x;
+    lookAhead_pose_maker_.pose.position.y = lookAhead_Pose.pose.position.y;
+    lookAhead_pose_maker_.scale.x = 0.5;
+    lookAhead_pose_maker_.scale.y = 0.5;
+    lookAhead_pose_maker_.scale.z = 0.5;
+    lookAhead_pose_maker_.color.r = 1.0;
+    lookAhead_pose_maker_.color.g = 0.0;
+    lookAhead_pose_maker_.color.b = 0.0;
+    lookAhead_pose_maker_.color.a = 1.0;
+}
+
 void Control_Robot::LateralControl(){
     if(isPath){
         lookAhead_idx_ = closest_idx_ + lookAhead_;
         lookAhead_Pose_ = transformEgo2World(best_local_path_.poses[lookAhead_idx_]);
+        Make_LookAheadMarker(lookAhead_Pose_);
         double lookAhead_distance = sqrt(pow(vehicle_state_.x - lookAhead_Pose_.pose.position.x,2)+pow(vehicle_state_.y - lookAhead_Pose_.pose.position.y,2));
         double alpha = atan2(lookAhead_Pose_.pose.position.y -vehicle_state_.y,lookAhead_Pose_.pose.position.x -vehicle_state_.x ) - vehicle_state_.yaw;
         control_cmd_.steering = atan2(2 * wheelBase_ * sin(alpha),lookAhead_distance);
@@ -79,6 +101,7 @@ void Control_Robot::Publish_ControlCommand(){
     LateralControl();
     pub_ControlCommand.publish(control_cmd_);
     pub_ArduinoCommand.publish(arduino_control_cmd_);
+    pub_lookAheadPose.publish(lookAhead_pose_maker_);
 }
 
 int main(int argc, char** argv) {

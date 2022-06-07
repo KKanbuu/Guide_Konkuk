@@ -9,6 +9,7 @@
 #include "kkanbu_msgs/ControlCommand.h"
 #include "kkanbu_msgs/VehicleState.h"
 
+#include "visualization_msgs/Marker.h"
 #include "geometry_msgs/PoseStamped.h"
 #include "nav_msgs/Odometry.h"
 #include "nav_msgs/Path.h"
@@ -21,6 +22,7 @@ class Control_Robot{
         
         ros::Publisher pub_ControlCommand;
         ros::Publisher pub_ArduinoCommand;
+        ros::Publisher pub_lookAheadPose;
 
         ros::Subscriber sub_VehicleState;
         ros::Subscriber sub_LocalPath;
@@ -36,6 +38,7 @@ class Control_Robot{
         //Func
         void LongitudinalControl();
         void LateralControl();
+        void Make_LookAheadMarker(geometry_msgs::PoseStamped lookAhead_Pose);
         void Publish_ControlCommand();
         geometry_msgs::PoseStamped transformEgo2World(geometry_msgs::PoseStamped);
 
@@ -56,6 +59,7 @@ class Control_Robot{
         //Output
         kkanbu_msgs::ControlCommand control_cmd_;
         kkanbu_msgs::ControlCommand arduino_control_cmd_;
+        visualization_msgs::Marker lookAhead_pose_maker_;
 
         // Variables
         int closest_idx_ = 0;

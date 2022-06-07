@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(local_planning_EXPORTED_TARGETS "")
+set(local_planning_EXPORTED_TARGETS "local_planning_generate_messages_cpp;local_planning_generate_messages_eus;local_planning_generate_messages_lisp;local_planning_generate_messages_nodejs;local_planning_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${local_planning_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   list(APPEND local_planning_EXPORTED_TARGETS ${${local_planning_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "local_planning-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${local_planning_DIR}/${extra})
