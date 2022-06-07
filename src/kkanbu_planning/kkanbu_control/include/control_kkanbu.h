@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 
 #include <tf/tf.h>
+#include <tf/transform_listener.h>
 
 #include "kkanbu_msgs/ControlCommand.h"
 #include "kkanbu_msgs/VehicleState.h"
@@ -36,7 +37,7 @@ class Control_Robot{
         void LongitudinalControl();
         void LateralControl();
         void Publish_ControlCommand();
-        void find_ClosestWaypoint();
+        geometry_msgs::PoseStamped transformEgo2World(geometry_msgs::PoseStamped);
 
     private:
         // Param
@@ -48,12 +49,16 @@ class Control_Robot{
         kkanbu_msgs::VehicleState vehicle_state_;
         nav_msgs::Path best_local_path_;
 
+        // TF
+        tf::TransformListener ego2map;
+        tf::StampedTransform transform_ego2map;
+
         //Output
         kkanbu_msgs::ControlCommand control_cmd_;
         kkanbu_msgs::ControlCommand arduino_control_cmd_;
 
         // Variables
-        int closest_idx_;
+        int closest_idx_ = 0;
         int lookAhead_idx_;
         double lookAhead_yaw_;
         double wheelBase_ = 0.6;

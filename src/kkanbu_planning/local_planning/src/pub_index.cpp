@@ -10,6 +10,7 @@
 #include "kkanbu_msgs/SensorPointArray.h"
 #include "kkanbu_msgs/SensorPoint.h"
 
+
 //Message header
 #include<std_msgs/Int32.h>
 #include<std_msgs/Float64.h>
@@ -44,14 +45,14 @@ class indexPub{
 
     public:
         void test_mat(){
-            exam_matrix[0][0] = -4;  exam_matrix[0][1] = 7;  exam_matrix[0][2] = 1;  obs_state[0]=true;
+            exam_matrix[0][0] = -100;  exam_matrix[0][1] = 7;  exam_matrix[0][2] = 1;  obs_state[0]=true;
             exam_matrix[1][0] = -1;  exam_matrix[1][1] = 5;  exam_matrix[1][2] = 0.2;  obs_state[1]=true;
             exam_matrix[2][0] = 0;  exam_matrix[2][1] = 6;  exam_matrix[2][2] = 1;   obs_state[2]=true;
             exam_matrix[3][0] = 7;  exam_matrix[3][1] = 8;  exam_matrix[3][2] = 1;   obs_state[3]=true;
             test_obs();
         }
         void test_obs(){
-            for(int i=0;i<2;i++){
+            for(int i=0;i<1;i++){
                 point.x=exam_matrix[i][0];
                 point.y=exam_matrix[i][1];
                 point.r=exam_matrix[i][2];

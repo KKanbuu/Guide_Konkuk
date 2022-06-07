@@ -37,23 +37,32 @@ void Control_Robot::LongitudinalControl(){
     }
 }
 
-void Control_Robot::find_ClosestWaypoint(){
-    double min_distance = 1000;
-    
-    for(int i=0;i<best_local_path_.poses.size();i++){
-        double temp_distance = sqrt(pow(vehicle_state_.x - best_local_path_.poses[i].pose.position.x,2)+pow(vehicle_state_.y - best_local_path_.poses[i].pose.position.y,2));
-        if(temp_distance < min_distance){
-            closest_idx_ = i;
-            min_distance = temp_distance;
-        }
+geometry_msgs::PoseStamped Control_Robot::transformEgo2World(geometry_msgs::PoseStamped ego_frame_pose){
+    try{
+        geometry_msgs::PoseStamped world_frame_pose;
+        ego2map.transformPose("/map",ego_frame_pose,world_frame_pose);
+    }catch (tf::TransformException &ex){
+        ROS_ERROR("%s",ex.what());
+        // ros::Duration(1.0).sleep();
+        // continue;
     }
+
+
+    // double min_distance = 1000;
+    
+    // for(int i=0;i<best_local_path_.poses.size();i++){
+    //     double temp_distance = sqrt(pow(vehicle_state_.x - best_local_path_.poses[i].pose.position.x,2)+pow(vehicle_state_.y - best_local_path_.poses[i].pose.position.y,2));
+    //     if(temp_distance < min_distance){
+    //         closest_idx_ = i;
+    //         min_distance = temp_distance;
+    //     }
+    // }
 }
 
 void Control_Robot::LateralControl(){
     if(isPath){
-        find_ClosestWaypoint();
         lookAhead_idx_ = closest_idx_ + lookAhead_;
-        lookAhead_Pose_ = best_local_path_.poses[lookAhead_idx_];
+        lookAhead_Pose_ = transformEgo2World(best_local_path_.poses[lookAhead_idx_]);
         double lookAhead_distance = sqrt(pow(vehicle_state_.x - lookAhead_Pose_.pose.position.x,2)+pow(vehicle_state_.y - lookAhead_Pose_.pose.position.y,2));
         double alpha = atan2(lookAhead_Pose_.pose.position.y -vehicle_state_.y,lookAhead_Pose_.pose.position.x -vehicle_state_.x ) - vehicle_state_.yaw;
         control_cmd_.steering = atan2(2 * wheelBase_ * sin(alpha),lookAhead_distance);
