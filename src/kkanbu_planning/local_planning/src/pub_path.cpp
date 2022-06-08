@@ -183,8 +183,8 @@ class pointPub{
                     }
                 }
                 
-                lookAhead_idx_ = closest_idx_ + 1;  // 인덱스 사이의 거리가 1미터 안쪽임
-                centerline_cost_idx_ = closest_idx_ + 2;
+                lookAhead_idx_ = closest_idx_ + 4;  // 인덱스 사이의 거리가 1미터 안쪽임
+                centerline_cost_idx_ = lookAhead_idx_;
                 printf("Closest Idx : %d , LookAhead Idx : %d\n", closest_idx_, lookAhead_idx_);
                 // cout << global_path << "\n";
                 
@@ -312,10 +312,10 @@ class pointPub{
                     local_point_1.pose.orientation.y = slope_1[1];
                     local_point_1.pose.orientation.z = slope_1[2];
                     local_point_1.pose.orientation.w = slope_1[3];
-                    tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
-                    point_1 = rotation_ego2lookAhead.transpose()*point_1;
-                    local_point_1.pose.position.x = point_1.getX();
-                    local_point_1.pose.position.y = point_1.getY();
+                    // tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
+                    // point_1 = rotation_ego2lookAhead.transpose()*point_1;
+                    // local_point_1.pose.position.x = point_1.getX();
+                    // local_point_1.pose.position.y = point_1.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
                     local_point_2.pose.position.y = -narrow_radius*(1 - cos(j*narrow_alpha/(point_num/3)));
@@ -325,10 +325,10 @@ class pointPub{
                     local_point_2.pose.orientation.y = slope_2[1];
                     local_point_2.pose.orientation.z = slope_2[2];
                     local_point_2.pose.orientation.w = slope_2[3];
-                    tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
-                    point_2 = rotation_ego2lookAhead.transpose()*point_2;
-                    local_point_2.pose.position.x = point_2.getX();
-                    local_point_2.pose.position.y = point_2.getY();
+                    // tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
+                    // point_2 = rotation_ego2lookAhead.transpose()*point_2;
+                    // local_point_2.pose.position.x = point_2.getX();
+                    // local_point_2.pose.position.y = point_2.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 왼쪽 넓은 경로 뽑기 (+) -----------------------------------//
                     local_point_3.pose.position.y = wide_radius*(1 - cos(j*wide_alpha/(point_num/3)));
@@ -338,10 +338,10 @@ class pointPub{
                     local_point_3.pose.orientation.y = slope_3[1];
                     local_point_3.pose.orientation.z = slope_3[2];
                     local_point_3.pose.orientation.w = slope_3[3];
-                    tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
-                    point_3 = rotation_ego2lookAhead.transpose()*point_3;
-                    local_point_3.pose.position.x = point_3.getX();
-                    local_point_3.pose.position.y = point_3.getY();
+                    // tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
+                    // point_3 = rotation_ego2lookAhead.transpose()*point_3;
+                    // local_point_3.pose.position.x = point_3.getX();
+                    // local_point_3.pose.position.y = point_3.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 넓은 경로 뽑기 (-) -----------------------------------//
                     local_point_4.pose.position.y = -wide_radius*(1 - cos(j*wide_alpha/(point_num/3)));
@@ -351,10 +351,10 @@ class pointPub{
                     local_point_4.pose.orientation.y = slope_4[1];
                     local_point_4.pose.orientation.z = slope_4[2];
                     local_point_4.pose.orientation.w = slope_4[3];
-                    tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
-                    point_4 = rotation_ego2lookAhead.transpose()*point_4;
-                    local_point_4.pose.position.x = point_4.getX();
-                    local_point_4.pose.position.y = point_4.getY();
+                    // tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
+                    // point_4 = rotation_ego2lookAhead.transpose()*point_4;
+                    // local_point_4.pose.position.x = point_4.getX();
+                    // local_point_4.pose.position.y = point_4.getY();
                 // -----------------------------------------------------------------------------------------//
                 }else if(j>=25 && j < 50){
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
@@ -365,10 +365,10 @@ class pointPub{
                     local_point_1.pose.orientation.y = slope_1[1];
                     local_point_1.pose.orientation.z = slope_1[2];
                     local_point_1.pose.orientation.w = slope_1[3];
-                    tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
-                    point_1 = rotation_ego2lookAhead.transpose()*point_1;
-                    local_point_1.pose.position.x = point_1.getX();
-                    local_point_1.pose.position.y = point_1.getY();
+                    // tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
+                    // point_1 = rotation_ego2lookAhead.transpose()*point_1;
+                    // local_point_1.pose.position.x = point_1.getX();
+                    // local_point_1.pose.position.y = point_1.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
                     local_point_2.pose.position.y = -(narrow_radius*(1-cos(narrow_alpha)) + narrow_radius*(cos(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2))) - cos(narrow_alpha)));
@@ -378,10 +378,10 @@ class pointPub{
                     local_point_2.pose.orientation.y = slope_2[1];
                     local_point_2.pose.orientation.z = slope_2[2];
                     local_point_2.pose.orientation.w = slope_2[3];
-                    tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
-                    point_2 = rotation_ego2lookAhead.transpose()*point_2;
-                    local_point_2.pose.position.x = point_2.getX();
-                    local_point_2.pose.position.y = point_2.getY();
+                    // tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
+                    // point_2 = rotation_ego2lookAhead.transpose()*point_2;
+                    // local_point_2.pose.position.x = point_2.getX();
+                    // local_point_2.pose.position.y = point_2.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
                     local_point_3.pose.position.y = wide_radius*(1-cos(wide_alpha)) + wide_radius*(cos(wide_alpha-(wide_alpha*(j-25)/(point_num/2))) - cos(wide_alpha));
@@ -391,10 +391,10 @@ class pointPub{
                     local_point_3.pose.orientation.y = slope_3[1];
                     local_point_3.pose.orientation.z = slope_3[2];
                     local_point_3.pose.orientation.w = slope_3[3];
-                    tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
-                    point_3 = rotation_ego2lookAhead.transpose()*point_3;
-                    local_point_3.pose.position.x = point_3.getX();
-                    local_point_3.pose.position.y = point_3.getY();
+                    // tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
+                    // point_3 = rotation_ego2lookAhead.transpose()*point_3;
+                    // local_point_3.pose.position.x = point_3.getX();
+                    // local_point_3.pose.position.y = point_3.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
                     local_point_4.pose.position.y = -(wide_radius*(1-cos(wide_alpha)) + wide_radius*(cos(wide_alpha-(wide_alpha*(j-25)/(point_num/2))) - cos(wide_alpha)));
@@ -404,10 +404,10 @@ class pointPub{
                     local_point_4.pose.orientation.y = slope_4[1];
                     local_point_4.pose.orientation.z = slope_4[2];
                     local_point_4.pose.orientation.w = slope_4[3];
-                    tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
-                    point_4 = rotation_ego2lookAhead.transpose()*point_4;
-                    local_point_4.pose.position.x = point_4.getX();
-                    local_point_4.pose.position.y = point_4.getY();
+                    // tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
+                    // point_4 = rotation_ego2lookAhead.transpose()*point_4;
+                    // local_point_4.pose.position.x = point_4.getX();
+                    // local_point_4.pose.position.y = point_4.getY();
                 // -----------------------------------------------------------------------------------------//
                 }else{
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
@@ -418,10 +418,10 @@ class pointPub{
                     local_point_1.pose.orientation.y = slope_1[1];
                     local_point_1.pose.orientation.z = slope_1[2];
                     local_point_1.pose.orientation.w = slope_1[3];
-                    tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
-                    point_1 = rotation_ego2lookAhead.transpose()*point_1;
-                    local_point_1.pose.position.x = point_1.getX();
-                    local_point_1.pose.position.y = point_1.getY();
+                    // tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
+                    // point_1 = rotation_ego2lookAhead.transpose()*point_1;
+                    // local_point_1.pose.position.x = point_1.getX();
+                    // local_point_1.pose.position.y = point_1.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
                     local_point_2.pose.position.y = -narrow_offset;
@@ -431,10 +431,10 @@ class pointPub{
                     local_point_2.pose.orientation.y = slope_2[1];
                     local_point_2.pose.orientation.z = slope_2[2];
                     local_point_2.pose.orientation.w = slope_2[3];
-                    tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
-                    point_2 = rotation_ego2lookAhead.transpose()*point_2;
-                    local_point_2.pose.position.x = point_2.getX();
-                    local_point_2.pose.position.y = point_2.getY();
+                    // tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
+                    // point_2 = rotation_ego2lookAhead.transpose()*point_2;
+                    // local_point_2.pose.position.x = point_2.getX();
+                    // local_point_2.pose.position.y = point_2.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
                     local_point_3.pose.position.y = wide_offset;
@@ -444,10 +444,10 @@ class pointPub{
                     local_point_3.pose.orientation.y = slope_3[1];
                     local_point_3.pose.orientation.z = slope_3[2];
                     local_point_3.pose.orientation.w = slope_3[3];
-                    tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
-                    point_3 = rotation_ego2lookAhead.transpose()*point_3;
-                    local_point_3.pose.position.x = point_3.getX();
-                    local_point_3.pose.position.y = point_3.getY();
+                    // tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
+                    // point_3 = rotation_ego2lookAhead.transpose()*point_3;
+                    // local_point_3.pose.position.x = point_3.getX();
+                    // local_point_3.pose.position.y = point_3.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
                     local_point_4.pose.position.y = -wide_offset;
@@ -457,10 +457,10 @@ class pointPub{
                     local_point_4.pose.orientation.y = slope_4[1];
                     local_point_4.pose.orientation.z = slope_4[2];
                     local_point_4.pose.orientation.w = slope_4[3];
-                    tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
-                    point_4 = rotation_ego2lookAhead.transpose()*point_4;
-                    local_point_4.pose.position.x = point_4.getX();
-                    local_point_4.pose.position.y = point_4.getY();
+                    // tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
+                    // point_4 = rotation_ego2lookAhead.transpose()*point_4;
+                    // local_point_4.pose.position.x = point_4.getX();
+                    // local_point_4.pose.position.y = point_4.getY();
                 // -----------------------------------------------------------------------------------------//
                 
                 }
@@ -480,12 +480,33 @@ class pointPub{
         }
         
         void check_collision(){
-            double cost_path_1 = 0; double cost_path_2 = 0; double cost_path_3 = 0; double cost_path_4 = 0; double cost_path_st = 0;
+            double cost_path[5];
+            cost_path[0] = 0.0; cost_path[1] = 0; cost_path[2] = 0; cost_path[3] = 0; cost_path[4] = 0;
             // --- for collision check --- //
+            // with sensor 
             // --------------------------- //
             // --- global path distance --- //
-            
+            geometry_msgs::PoseStamped path_last_pose;
+            path_last_pose = path_1.poses.back();
+            cost_path[0] += sqrt(pow(path_last_pose.pose.position.x-centerline_cost_pose_.pose.position.x,2)+pow(path_last_pose.pose.position.y-centerline_cost_pose_.pose.position.y,2));
+            path_last_pose = path_2.poses.back();
+            cost_path[1] += sqrt(pow(path_last_pose.pose.position.x-centerline_cost_pose_.pose.position.x,2)+pow(path_last_pose.pose.position.y-centerline_cost_pose_.pose.position.y,2));
+            path_last_pose = path_3.poses.back();
+            cost_path[2] += sqrt(pow(path_last_pose.pose.position.x-centerline_cost_pose_.pose.position.x,2)+pow(path_last_pose.pose.position.y-centerline_cost_pose_.pose.position.y,2));
+            path_last_pose = path_4.poses.back();
+            cost_path[3] += sqrt(pow(path_last_pose.pose.position.x-centerline_cost_pose_.pose.position.x,2)+pow(path_last_pose.pose.position.y-centerline_cost_pose_.pose.position.y,2));
+            path_last_pose = straight_path.poses.back();
+            cost_path[4] += sqrt(pow(path_last_pose.pose.position.x-centerline_cost_pose_.pose.position.x,2)+pow(path_last_pose.pose.position.y-centerline_cost_pose_.pose.position.y,2));
             // ---------------------------- //
+            // ------------ Find Min Cost Idx -------------------//
+            double min_cost = 99999999;
+            proper_idx = 4;
+            for(int i=0;i<5;i++){
+                if(min_cost > cost_path[i]){
+                    min_cost = cost_path[i];
+                    proper_idx = i;
+                }
+            }
             publish_local_path();
         }
 
@@ -506,7 +527,7 @@ class pointPub{
             lookahead_.color.a = 1.0;
             pub_lookahead_.publish(lookahead_);
             
-            proper_idx = 4;  // 임의로 proper idx를 4로 두어 직진을 보냄. 이전에 path를 보내지 못하는 오류 때문
+            // proper_idx = 4;  // 임의로 proper idx를 4로 두어 직진을 보냄. 이전에 path를 보내지 못하는 오류 때문
 
             if(proper_idx == 0){
                 pub_pose.publish(path_1);

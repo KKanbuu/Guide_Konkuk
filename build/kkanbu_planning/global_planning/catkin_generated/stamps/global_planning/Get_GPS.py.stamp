@@ -64,7 +64,7 @@ class GlobalPlanner():
         self._entire_path.header.stamp = rospy.Time.now()
         if self._data is not None:
             for i in range(len(self._data.index)):
-                if i % 30 == 0:
+                if i % 3 == 0:
                     pose = PoseStamped()
                     point = LandmarkPoint()
                     pose.pose.position.x = self._x_list[i]

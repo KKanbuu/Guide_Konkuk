@@ -23,7 +23,7 @@ Communication_Arduino::Communication_Arduino(){
     ego_odom_.pose.pose.position.z = 0.0;
     // 처음 yaw 값이 이상함!
     // ego_yaw_ = ego_init_yaw_ + PI;
-    ego_yaw_ = atan2(-1.49833577982+1.48723699614 ,2.17403534976-2.1828728913) + PI*0.675;
+    ego_yaw_ = atan2(-1.49833577982+1.48723699614 ,2.17403534976-2.1828728913) + PI*0.675 + PI;
     tf::Quaternion q;
     q.setRPY(0, 0, ego_init_yaw_);
     // q.normalize();
