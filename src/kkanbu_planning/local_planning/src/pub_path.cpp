@@ -40,6 +40,10 @@ class pointPub{
 	        //     Publisher 객체 선언, topic의 이름 xy_pose, 메시지 큐의 크기가 100
             pub_pose=nh.advertise<nav_msgs::Path>("/local/best_path",10);
             pub_lookahead_=nh.advertise<visualization_msgs::Marker>("/local/lookahead",10);
+            pub_candidate_1 = nh.advertise<nav_msgs::Path>("/local/candidate_path_1",10);
+            pub_candidate_2 = nh.advertise<nav_msgs::Path>("/local/candidate_path_2",10);
+            pub_candidate_3 = nh.advertise<nav_msgs::Path>("/local/candidate_path_3",10);
+            pub_candidate_4 = nh.advertise<nav_msgs::Path>("/local/candidate_path_4",10);
 
             sub_VehicleState = nh.subscribe("/ego/vehicle_state",10,&pointPub::get_VehicleState,this);
             sub_GlobalPath = nh.subscribe("/map/entire_path",10,&pointPub::get_GlobalPath,this);
@@ -78,6 +82,10 @@ class pointPub{
 
         ros::Publisher pub_pose;
         ros::Publisher pub_lookahead_;
+        ros::Publisher pub_candidate_1;
+        ros::Publisher pub_candidate_2;
+        ros::Publisher pub_candidate_3;
+        ros::Publisher pub_candidate_4;
   
 
         tf::Quaternion slope_1;
@@ -181,7 +189,7 @@ class pointPub{
                 ego_frame_pose.header.frame_id = "/ego";
                 geometry_msgs::PoseStamped world_frame_pose;
                 world_frame_pose.header.frame_id = "/map";
-                printf("wow1\n");
+                // printf("wow1\n");
                 world_frame_pose.pose.position.x =global_path.poses[lookAhead_idx_].pose.position.x;
                 world_frame_pose.pose.position.y =global_path.poses[lookAhead_idx_].pose.position.y;
                 world_frame_pose.pose.position.z =global_path.poses[lookAhead_idx_].pose.position.z;
@@ -424,22 +432,42 @@ class pointPub{
 
             if(proper_idx == 0){
                 pub_pose.publish(path_1);
+                pub_candidate_1.publish(path_2);
+                pub_candidate_2.publish(path_3);
+                pub_candidate_3.publish(path_4);
+                pub_candidate_4.publish(straight_path);
                 ROS_INFO_STREAM("path_111");
             }
             else if(proper_idx == 1){
                 pub_pose.publish(path_2);
+                pub_candidate_1.publish(path_1);
+                pub_candidate_2.publish(path_3);
+                pub_candidate_3.publish(path_4);
+                pub_candidate_4.publish(straight_path);
                 ROS_INFO_STREAM("path_222");
             }
             else if(proper_idx == 2){
                 pub_pose.publish(path_3);
+                pub_candidate_1.publish(path_1);
+                pub_candidate_2.publish(path_2);
+                pub_candidate_3.publish(path_4);
+                pub_candidate_4.publish(straight_path);
                 ROS_INFO_STREAM("path_333");
             }
             else if(proper_idx == 3){
                 pub_pose.publish(path_4);
+                pub_candidate_1.publish(path_1);
+                pub_candidate_2.publish(path_2);
+                pub_candidate_3.publish(path_3);
+                pub_candidate_4.publish(straight_path);
                 ROS_INFO_STREAM("path_444");
             }
             else{
                 pub_pose.publish(straight_path);
+                pub_candidate_1.publish(path_1);
+                pub_candidate_2.publish(path_2);
+                pub_candidate_3.publish(path_3);
+                pub_candidate_4.publish(path_4);
                 ROS_INFO_STREAM("path_st");
             }
         }
