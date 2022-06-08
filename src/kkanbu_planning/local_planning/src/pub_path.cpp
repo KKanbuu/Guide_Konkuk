@@ -122,7 +122,7 @@ class pointPub{
         double pass_through_y;
         double pass_through_x_2;
         double pass_through_y_2;
-        int point_num = 50;     // 초기 점과 최종 점을 포함하여 2*k개의 점을 찍어서 path를 생성할 것
+        int point_num = 75;     // 초기 점과 최종 점을 포함하여 2*k개의 점을 찍어서 path를 생성할 것
         double narrow_point_info[11][3];
         double wide_point_info[11][3];
         double straight_point_info[11][2];
@@ -131,7 +131,9 @@ class pointPub{
         int sum_possible = 0;
         bool GLPATH = false;
         int lookAhead_idx_;
+        int centerline_cost_idx_;
         geometry_msgs::PoseStamped lookAhead_Pose_;
+        geometry_msgs::PoseStamped centerline_cost_pose_;
         double local_distance[5]={1000,1000,1000,1000,1000};
         double dx[5]={-10.-5,5,10,0};
         double dy=20;
@@ -182,6 +184,7 @@ class pointPub{
                 }
                 
                 lookAhead_idx_ = closest_idx_ + 1;  // 인덱스 사이의 거리가 1미터 안쪽임
+                centerline_cost_idx_ = closest_idx_ + 2;
                 printf("Closest Idx : %d , LookAhead Idx : %d\n", closest_idx_, lookAhead_idx_);
                 // cout << global_path << "\n";
                 
@@ -205,7 +208,27 @@ class pointPub{
                 lookAhead_Pose_.pose.position.y = ego_frame_pose.pose.position.y;
                 // lookAhead_Pose_ = global_path.poses[lookAhead_idx_];
                 printf("Ego Frame Pose... x : %f , y : %f \n",lookAhead_Pose_.pose.position.x,lookAhead_Pose_.pose.position.y);
-                    cal_slope();
+                
+                geometry_msgs::PoseStamped ego_frame_pose_;
+                ego_frame_pose_.header.frame_id = "/ego";
+                geometry_msgs::PoseStamped world_frame_pose_;
+                world_frame_pose_.header.frame_id = "/map";
+                // printf("wow1\n");
+                world_frame_pose_.pose.position.x =global_path.poses[centerline_cost_idx_].pose.position.x;
+                world_frame_pose_.pose.position.y =global_path.poses[centerline_cost_idx_].pose.position.y;
+                world_frame_pose_.pose.position.z =global_path.poses[centerline_cost_idx_].pose.position.z;
+                world_frame_pose_.pose.orientation = global_path.poses[centerline_cost_idx_].pose.orientation;
+                // printf("World Frame Pose... x : %f , y : %f \n",world_frame_pose.pose.position.x,world_frame_pose.pose.position.y);
+                    
+                try{
+                    map2ego.transformPose("/ego",world_frame_pose_,ego_frame_pose_);
+                }catch (tf::TransformException &ex){
+                    ROS_ERROR("%s",ex.what());
+                }
+                centerline_cost_pose_.pose.position.x = ego_frame_pose_.pose.position.x;
+                centerline_cost_pose_.pose.position.y = ego_frame_pose_.pose.position.y;
+                
+                cal_slope();
                 // }
             }
             // printf("wow Wow \n");
@@ -282,9 +305,9 @@ class pointPub{
                 
                 if(j<25){
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
-                    local_point_1.pose.position.y = narrow_radius*(1 - cos(j*narrow_alpha/(point_num/2)));
-                    local_point_1.pose.position.x = narrow_radius*sin(j*narrow_alpha/(point_num/2));
-                    slope_1 = tf::createQuaternionFromRPY(0,0,j*narrow_alpha/(point_num/2) + lookahead_theta);
+                    local_point_1.pose.position.y = narrow_radius*(1 - cos(j*narrow_alpha/(point_num/3)));
+                    local_point_1.pose.position.x = narrow_radius*sin(j*narrow_alpha/(point_num/3));
+                    slope_1 = tf::createQuaternionFromRPY(0,0,j*narrow_alpha/(point_num/3) + lookahead_theta);
                     local_point_1.pose.orientation.x = slope_1[0];
                     local_point_1.pose.orientation.y = slope_1[1];
                     local_point_1.pose.orientation.z = slope_1[2];
@@ -295,9 +318,9 @@ class pointPub{
                     local_point_1.pose.position.y = point_1.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
-                    local_point_2.pose.position.y = -narrow_radius*(1 - cos(j*narrow_alpha/(point_num/2)));
-                    local_point_2.pose.position.x = narrow_radius*sin(j*narrow_alpha/(point_num/2));
-                    slope_2 = tf::createQuaternionFromRPY(0,0,2*M_PI-j*narrow_alpha/(point_num/2)+lookahead_theta);
+                    local_point_2.pose.position.y = -narrow_radius*(1 - cos(j*narrow_alpha/(point_num/3)));
+                    local_point_2.pose.position.x = narrow_radius*sin(j*narrow_alpha/(point_num/3));
+                    slope_2 = tf::createQuaternionFromRPY(0,0,2*M_PI-j*narrow_alpha/(point_num/3)+lookahead_theta);
                     local_point_2.pose.orientation.x = slope_2[0];
                     local_point_2.pose.orientation.y = slope_2[1];
                     local_point_2.pose.orientation.z = slope_2[2];
@@ -308,9 +331,9 @@ class pointPub{
                     local_point_2.pose.position.y = point_2.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 왼쪽 넓은 경로 뽑기 (+) -----------------------------------//
-                    local_point_3.pose.position.y = wide_radius*(1 - cos(j*wide_alpha/(point_num/2)));
-                    local_point_3.pose.position.x = wide_radius*sin(j*wide_alpha/(point_num/2));
-                    slope_3 = tf::createQuaternionFromRPY(0,0,j*wide_alpha/(point_num/2)+lookahead_theta);
+                    local_point_3.pose.position.y = wide_radius*(1 - cos(j*wide_alpha/(point_num/3)));
+                    local_point_3.pose.position.x = wide_radius*sin(j*wide_alpha/(point_num/3));
+                    slope_3 = tf::createQuaternionFromRPY(0,0,j*wide_alpha/(point_num/3)+lookahead_theta);
                     local_point_3.pose.orientation.x = slope_3[0];
                     local_point_3.pose.orientation.y = slope_3[1];
                     local_point_3.pose.orientation.z = slope_3[2];
@@ -321,9 +344,9 @@ class pointPub{
                     local_point_3.pose.position.y = point_3.getY();
                 // -----------------------------------------------------------------------------------------//
                 // --------------------------------- 오른쪽 넓은 경로 뽑기 (-) -----------------------------------//
-                    local_point_4.pose.position.y = -wide_radius*(1 - cos(j*wide_alpha/(point_num/2)));
-                    local_point_4.pose.position.x = wide_radius*sin(j*wide_alpha/(point_num/2));
-                    slope_4 = tf::createQuaternionFromRPY(0,0,2*M_PI-j*wide_alpha/(point_num/2)+lookahead_theta);
+                    local_point_4.pose.position.y = -wide_radius*(1 - cos(j*wide_alpha/(point_num/3)));
+                    local_point_4.pose.position.x = wide_radius*sin(j*wide_alpha/(point_num/3));
+                    slope_4 = tf::createQuaternionFromRPY(0,0,2*M_PI-j*wide_alpha/(point_num/3)+lookahead_theta);
                     local_point_4.pose.orientation.x = slope_4[0];
                     local_point_4.pose.orientation.y = slope_4[1];
                     local_point_4.pose.orientation.z = slope_4[2];
@@ -333,11 +356,11 @@ class pointPub{
                     local_point_4.pose.position.x = point_4.getX();
                     local_point_4.pose.position.y = point_4.getY();
                 // -----------------------------------------------------------------------------------------//
-                }else{
+                }else if(j>=25 && j < 50){
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
                     local_point_1.pose.position.y = narrow_radius*(1-cos(narrow_alpha)) + narrow_radius*(cos(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2))) - cos(narrow_alpha));
                     local_point_1.pose.position.x = (narrow_radius*sin(narrow_alpha)) + narrow_radius*(sin(narrow_alpha)-sin(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2))));
-                    slope_1 = tf::createQuaternionFromRPY(0,0,(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2)))+lookahead_theta);
+                    slope_1 = tf::createQuaternionFromRPY(0,0,(narrow_alpha-(narrow_alpha*(j-25)/(point_num/3)))+lookahead_theta);
                     local_point_1.pose.orientation.x = slope_1[0];
                     local_point_1.pose.orientation.y = slope_1[1];
                     local_point_1.pose.orientation.z = slope_1[2];
@@ -350,7 +373,7 @@ class pointPub{
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
                     local_point_2.pose.position.y = -(narrow_radius*(1-cos(narrow_alpha)) + narrow_radius*(cos(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2))) - cos(narrow_alpha)));
                     local_point_2.pose.position.x = -(-(narrow_radius*sin(narrow_alpha)) - narrow_radius*(sin(narrow_alpha)-sin(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2)))));
-                    slope_2 = tf::createQuaternionFromRPY(0,0,2*M_PI-(narrow_alpha-(narrow_alpha*(j-25)/(point_num/2)))+lookahead_theta);
+                    slope_2 = tf::createQuaternionFromRPY(0,0,2*M_PI-(narrow_alpha-(narrow_alpha*(j-25)/(point_num/3)))+lookahead_theta);
                     local_point_2.pose.orientation.x = slope_2[0];
                     local_point_2.pose.orientation.y = slope_2[1];
                     local_point_2.pose.orientation.z = slope_2[2];
@@ -363,7 +386,7 @@ class pointPub{
                 // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
                     local_point_3.pose.position.y = wide_radius*(1-cos(wide_alpha)) + wide_radius*(cos(wide_alpha-(wide_alpha*(j-25)/(point_num/2))) - cos(wide_alpha));
                     local_point_3.pose.position.x = (wide_radius*sin(wide_alpha)) + wide_radius*(sin(wide_alpha)-sin(wide_alpha-(wide_alpha*(j-25)/(point_num/2))));
-                    slope_3 = tf::createQuaternionFromRPY(0,0,(wide_alpha-(wide_alpha*(j-25)/(point_num/2)))+lookahead_theta);
+                    slope_3 = tf::createQuaternionFromRPY(0,0,(wide_alpha-(wide_alpha*(j-25)/(point_num/3)))+lookahead_theta);
                     local_point_3.pose.orientation.x = slope_3[0];
                     local_point_3.pose.orientation.y = slope_3[1];
                     local_point_3.pose.orientation.z = slope_3[2];
@@ -376,7 +399,7 @@ class pointPub{
                 // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
                     local_point_4.pose.position.y = -(wide_radius*(1-cos(wide_alpha)) + wide_radius*(cos(wide_alpha-(wide_alpha*(j-25)/(point_num/2))) - cos(wide_alpha)));
                     local_point_4.pose.position.x = -(-(wide_radius*sin(wide_alpha)) - wide_radius*(sin(wide_alpha)-sin(wide_alpha-(wide_alpha*(j-25)/(point_num/2)))));
-                    slope_4 = tf::createQuaternionFromRPY(0,0,2*M_PI-(wide_alpha-(wide_alpha*(j-25)/(point_num/2)))+lookahead_theta);
+                    slope_4 = tf::createQuaternionFromRPY(0,0,2*M_PI-(wide_alpha-(wide_alpha*(j-25)/(point_num/3)))+lookahead_theta);
                     local_point_4.pose.orientation.x = slope_4[0];
                     local_point_4.pose.orientation.y = slope_4[1];
                     local_point_4.pose.orientation.z = slope_4[2];
@@ -386,6 +409,60 @@ class pointPub{
                     local_point_4.pose.position.x = point_4.getX();
                     local_point_4.pose.position.y = point_4.getY();
                 // -----------------------------------------------------------------------------------------//
+                }else{
+                // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
+                    local_point_1.pose.position.y = narrow_offset;
+                    local_point_1.pose.position.x = 2*narrow_radius*sin(narrow_alpha) + (lookAhead_distance - 2*narrow_radius*sin(narrow_alpha))*(j-50)/(point_num/3);
+                    slope_1 = tf::createQuaternionFromRPY(0,0,M_PI/2);
+                    local_point_1.pose.orientation.x = slope_1[0];
+                    local_point_1.pose.orientation.y = slope_1[1];
+                    local_point_1.pose.orientation.z = slope_1[2];
+                    local_point_1.pose.orientation.w = slope_1[3];
+                    tf::Vector3 point_1(local_point_1.pose.position.x,local_point_1.pose.position.y,0.0);
+                    point_1 = rotation_ego2lookAhead.transpose()*point_1;
+                    local_point_1.pose.position.x = point_1.getX();
+                    local_point_1.pose.position.y = point_1.getY();
+                // -----------------------------------------------------------------------------------------//
+                // --------------------------------- 오른쪽 얕은 경로 뽑기 (-) -----------------------------------//
+                    local_point_2.pose.position.y = -narrow_offset;
+                    local_point_2.pose.position.x = 2*narrow_radius*sin(narrow_alpha) + (lookAhead_distance - 2*narrow_radius*sin(narrow_alpha))*(j-50)/(point_num/3);
+                    slope_2 = tf::createQuaternionFromRPY(0,0,M_PI/2);
+                    local_point_2.pose.orientation.x = slope_2[0];
+                    local_point_2.pose.orientation.y = slope_2[1];
+                    local_point_2.pose.orientation.z = slope_2[2];
+                    local_point_2.pose.orientation.w = slope_2[3];
+                    tf::Vector3 point_2(local_point_2.pose.position.x,local_point_2.pose.position.y,0.0);
+                    point_2 = rotation_ego2lookAhead.transpose()*point_2;
+                    local_point_2.pose.position.x = point_2.getX();
+                    local_point_2.pose.position.y = point_2.getY();
+                // -----------------------------------------------------------------------------------------//
+                // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
+                    local_point_3.pose.position.y = wide_offset;
+                    local_point_3.pose.position.x = 2*wide_radius*sin(wide_alpha) + (lookAhead_distance - 2*wide_radius*sin(wide_alpha))*(j-50)/(point_num/3);
+                    slope_3 = tf::createQuaternionFromRPY(0,0,M_PI/2);
+                    local_point_3.pose.orientation.x = slope_3[0];
+                    local_point_3.pose.orientation.y = slope_3[1];
+                    local_point_3.pose.orientation.z = slope_3[2];
+                    local_point_3.pose.orientation.w = slope_3[3];
+                    tf::Vector3 point_3(local_point_3.pose.position.x,local_point_3.pose.position.y,0.0);
+                    point_3 = rotation_ego2lookAhead.transpose()*point_3;
+                    local_point_3.pose.position.x = point_3.getX();
+                    local_point_3.pose.position.y = point_3.getY();
+                // -----------------------------------------------------------------------------------------//
+                // --------------------------------- 왼쪽 얕은 경로 뽑기 (+) -----------------------------------//
+                    local_point_4.pose.position.y = -wide_offset;
+                    local_point_4.pose.position.x = 2*wide_radius*sin(wide_alpha) + (lookAhead_distance - 2*wide_radius*sin(wide_alpha))*(j-50)/(point_num/3);
+                    slope_4 = tf::createQuaternionFromRPY(0,0,M_PI/2);
+                    local_point_4.pose.orientation.x = slope_4[0];
+                    local_point_4.pose.orientation.y = slope_4[1];
+                    local_point_4.pose.orientation.z = slope_4[2];
+                    local_point_4.pose.orientation.w = slope_4[3];
+                    tf::Vector3 point_4(local_point_4.pose.position.x,local_point_4.pose.position.y,0.0);
+                    point_4 = rotation_ego2lookAhead.transpose()*point_4;
+                    local_point_4.pose.position.x = point_4.getX();
+                    local_point_4.pose.position.y = point_4.getY();
+                // -----------------------------------------------------------------------------------------//
+                
                 }
                 local_path_1.poses.push_back(local_point_1);
                 local_path_2.poses.push_back(local_point_2);
@@ -407,6 +484,7 @@ class pointPub{
             // --- for collision check --- //
             // --------------------------- //
             // --- global path distance --- //
+            
             // ---------------------------- //
             publish_local_path();
         }
