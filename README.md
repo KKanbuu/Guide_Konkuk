@@ -1,30 +1,65 @@
 # Guide_Konkuk
-# Global Planning
+# This is Jeonghun Branch of KKanbu!
 
-1. 직접 gnss로 좌표를 찍었을 때 청심대 쪽 학관 ~ 신공까지의 거리가 300m인데 포인트가 2200개정도 찍힌다. 
-구글 맵에 의한 직선거리는 218m이다. 아래는 google map에 의한 거리 계산이다. 
-1) 학관 ~ 신공학관(공C) :300m
-2) 학관 ~ 공B: 150m
-3) 학관 ~ 공A: 150m
-4) 다시 돌아오는 경우를 생각해서 역으로 돌아오는 point들도 고려해야함
+# How To Run Algorithm
+1. sh kkanbu.sh
+2. open another terminal
+3. go into arduino/libraries
+"rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=57600"
 
-2. 점 사이의 간격이 너무 촘촘하여 직선 위주 주행을 하는 길안내 로봇을 생각했을 때 간격이 너무 멀 필요가 없음
--> 전체 노드 수를 1000개(?) 아래로 제한
--> 3~5m 정도 간격에 하나씩 노드를 구성
--> posedstamped는 배열 형태, parsing한 점을 20개 중 하나만 받는 형태로 for문을 사용하여 받아올 예정
--> 만약 좌표가 튀어서 이상한 값인 부분(전 후 좌표와의 차이가 너무 많이 나는 곳)은 그 전 좌표를 사용해서 다시 진행
+# File Tree
 
-3. 2에서 얻은 좌표를 노드(landmark Point)로 선정하여 좌표들을 입력받아 그래프로 생성
--> A*사용해서 (휴리스틱으로 인지하는 정적 장애물 수, 남은 직선 거리) landmarkPoint들을 얻어냄
--> 얻어낸 landmarkPoint 들의 Path를 interpolate한다.
+	└── KKANBU
+		├── kkanbu_communication
+		├── kkanbu_msgs
+		├── kkanbu_planning
+		|		├── global_planninng
+		|		├── local_planning
+		|		└── kkanbu_control
+		├── kkanbu_sensors
+		├── kkanbu_tf
+		└── kkanbu_visualization
 
-4. interpolate한 Path 정보를 Local Planning에 Path msg로 publsih한다. 
-------------------------------------------------------------------------
 
-<수정사항>
--Get_GPS.py node에서 애초에 랜드마크 포인트를 50~100개를 뽑는다.
--뽑은 랜드마크 포인트 사이를 path[] 배열로 하나씩 저장한다.(예전에는 path를 전체경로 하나로 뽑았지만 수정 후는 path를 미리 여러개 생성)
--Path[]배열을 publish ->배열을 publsih하는 방식은 사용하기 어렵다고 판단, publish를 path수만큼 해주는 것 까지 성공함
+# Global Planning 
 
--Get_WP.cpp에서는 똑같이 랜드마크 포인트들을 통해 A*알고리즘을 적용하여 최단경로를 뽑아냄
--그리고 위의 Path[]배열과 비교하여 맞는 경로인지를 판단하는 것 추가.
+Input 1 : Ego position of robot from GNSS               [Start Point]
+
+Input 2 : Goal Index from ondemand service (Customer)   [Goal Point]
+
+Output : Global Path                                    [nav_msgs::Path]
+
+1. Get pre-saved waypoint and parsing for Global Planning 
+2. Extract "Landmark point" from parsed waypoint 
+3. Use "A* Algorithm" for searching path from start to goal
+4. Interpolate Path from A*
+5. Publish Path to Local Planning
+
+# Local Planning 
+
+Input 1 : Ego position of robot from GNSS               [Start Point]
+
+Input 2 : Global Path from Global Planning              [Standard Path]
+
+Input 3 : 2D LiDAR data from Perception                 [Point Cloud Data]
+
+Output : Best Local Path robot will be followed 
+
+1. Get Closest WP and Set Lookahead Point for make local path
+2. Make Several path adding some lateral offset
+3. Collision Checking for paths
+4. Costing paths with not collision
+5. Selecting Best Path and publish
+
+# Control 
+
+Input 1 : Vehicle State from GNSS - position, velocity,yaw, yawrate?
+
+Input 2 : Best Path from Local Planning
+
+Output : Lateral, Longitudinal Control Value to Arduino
+
+1. Get Closest WP and Set Lookahead Point for Control
+2. PID Control for Longitudinal Control --> Reinforcement Learning?
+3. Pure Pursuit Algorithm for Lateral Control 
+4. Publish to Arduino (Using ROS Serial)

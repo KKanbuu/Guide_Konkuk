@@ -1,0 +1,8 @@
+prefix=/home/kkanbu/git/Kkanbu/src/build/devel
+
+Name: communication_arduino
+Description: Description of communication_arduino
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
