@@ -1,5 +1,4 @@
 # Guide_Konkuk
-# This is Jeonghun Branch of KKanbu!
 
 # How To Run Algorithm
 1. sh kkanbu.sh
